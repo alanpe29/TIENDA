@@ -199,9 +199,12 @@
             const m = document.getElementById('f-mail')?.value;
             const yu = document.getElementById('f-yt-user')?.value;
             const yp = document.getElementById('f-yt-pass')?.value;
-            const fechaTxt = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            // FORMATO DE FECHA Y HORA: DD/MM/AAAA - HH:MM
+            const ahora = new Date();
+            const fechaTxt = ahora.toLocaleDateString('es-AR') + " - " + ahora.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
 
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}💰 Subtotal: $${subtotal.toLocaleString()}\n💰 Total:$${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🏦 CVU: ${CVU_PAGO}\n\n📅 _${fechaTxt}_\n`;
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}💰 Subtotal: $${subtotal.toLocaleString()}\n💰 Total:$${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🏦 CVU: ${CVU_PAGO}\n\n🕒 *HORA Y FECHA:* ${fechaTxt}\n`;
             
             if(m || yu) {
                 msg += `\n--------------------------\n📩 *DATOS PARA ACTIVACIÓN:*\n`;
@@ -221,8 +224,9 @@
             const user = document.getElementById('sop-user').value;
             const pass = document.getElementById('sop-pass').value;
             const prob = document.getElementById('sop-prob').value;
-            const fechaTxt = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            let msg = `🚨 *TICKET DE SOPORTE*\n📅 _${fechaTxt}_\n\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
+            const ahora = new Date();
+            const fechaTxt = ahora.toLocaleDateString('es-AR') + " - " + ahora.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
+            let msg = `🚨 *TICKET DE SOPORTE*\n🕒 *HORA Y FECHA:* ${fechaTxt}\n\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
         render();
