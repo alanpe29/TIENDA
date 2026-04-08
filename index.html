@@ -8,6 +8,7 @@
         :root {
             --morado: #6200ea; --cian: #00e5ff; --fondo: #050505;
             --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800; --oro: #ffd700;
+            --gris-oscuro: #333;
         }
 
         body { 
@@ -36,13 +37,22 @@
         }
 
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 120px; }
-        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; }
+        
+        /* Estilos de Tarjeta */
+        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
         .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
+        
+        /* Estilo Agotado */
+        .card.sin-stock { opacity: 0.6; filter: grayscale(0.8); border-color: #444 !important; }
+        .badge-agotado { position: absolute; top: 10px; right: 10px; background: var(--rojo); color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; text-transform: uppercase; }
+
         .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
         .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
+        
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
-        .btn-add:hover { background: var(--cian); color: #000; }
+        .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
+        .btn-add:disabled { background: var(--gris-oscuro); cursor: not-allowed; opacity: 0.5; }
 
         .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; }
@@ -71,24 +81,26 @@
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
 
+        // NOTA: Para agotar un producto agregá stock: false
         const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo" },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo" },
+            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true, stock: true },
+            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", stock: true },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", stock: true },
             { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", stock: true },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo" },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo" },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo" },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "mail" },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo" },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full" },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full" },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail" },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3500, tipo: "mail" },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo" },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo" },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo" }
+            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", stock: true },
+            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", stock: true },
+            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", stock: true },
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "mail", stock: true },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", stock: true },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", stock: true },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", stock: true },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", stock: true },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3500, tipo: "mail", stock: true },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", stock: true },
+            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", stock: true },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
         ];
+        // ==========================================
     </script>
 
     <div class="status-top" id="tienda-status"></div>
@@ -109,7 +121,7 @@
             <div id="seccion-pago-total" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 20px 0; color:white;">TOTAL: <span id="total-precio" style="color:var(--cian); font-weight:bold;">$0</span></div>
                 <div style="background: #000; border: 1px dashed var(--cian); padding: 15px; border-radius: 15px; margin: 15px 0; text-align: center;">
-                    <span style="color:#aaa; font-size:0.7rem;">Copiá el Alias y transferí:</span><br>
+                    <span style="color:#aaa; font-size:0.8rem;">Copiá el Alias y transferí:</span><br>
                     <b style="color:white; font-size:1.4rem;" id="alias-txt"></b><br>
                     <button class="btn-copiar" onclick="copiarAlias()" id="btn-copiar-txt">COPIAR ALIAS</button>
                 </div>
@@ -144,10 +156,21 @@
 
         function render() {
             const grid = document.getElementById('main-grid');
+            grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
+                const enStock = p.stock !== false;
                 const card = document.createElement('div');
-                card.className = `card ${p.especial ? 'combo' : ''}`;
-                card.innerHTML = `<h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" ${!TIENDA_ABIERTA ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA ? 'Añadir al Carrito' : 'Cerrado'}</button>`;
+                card.className = `card ${p.especial ? 'combo' : ''} ${!enStock ? 'sin-stock' : ''}`;
+                
+                card.innerHTML = `
+                    ${!enStock ? '<div class="badge-agotado">Agotado</div>' : ''}
+                    <h2>${p.nombre}</h2>
+                    <span class="precio-tag">$${p.precio.toLocaleString()}</span>
+                    <button class="btn-add" 
+                        ${(!TIENDA_ABIERTA || !enStock) ? 'disabled' : ''} 
+                        onclick="agregarAlCarrito(${p.id})">
+                        ${!enStock ? 'Sin Stock' : (TIENDA_ABIERTA ? 'Añadir al Carrito' : 'Cerrado')}
+                    </button>`;
                 grid.appendChild(card);
             });
         }
