@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ALN FLUX STORE | Streaming Premium</title>
     <style>
         :root {
@@ -10,62 +13,34 @@
             --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800; --oro: #ffd700;
             --gris-oscuro: #333;
         }
-
-        body { 
-            margin: 0; padding: 0; 
-            background-color: var(--fondo); 
-            background-image: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            background-position: 0 0, 40px 60px, 130px 270px;
-            color: white; font-family: 'Segoe UI', sans-serif; 
-            display: flex; flex-direction: column; align-items: center; 
-        }
-        
+        body { margin: 0; padding: 0; background-color: var(--fondo); background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px), radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px); background-size: 550px 550px, 350px 350px, 250px 250px; background-position: 0 0, 40px 60px, 130px 270px; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
         .status-top { width: 100%; padding: 8px 0; text-align: center; font-weight: bold; font-size: 0.8rem; background: rgba(37, 211, 102, 0.1); color: var(--verde); border-bottom: 1px solid var(--verde); }
+        .last-update { font-size: 0.6rem; opacity: 0.6; display: block; font-weight: normal; margin-top: 2px; }
         header { width: 100%; background: linear-gradient(180deg, #100020 0%, var(--fondo) 100%); padding: 40px 0; text-align: center; border-bottom: 1px solid var(--morado); }
         header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 5px; text-transform: uppercase; color: white; display: inline-block;}
         header h1 span { color: var(--cian); animation: glitchNeon 8s infinite; }
-
-        @keyframes glitchNeon {
-            0%, 100% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); }
-            92% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); opacity: 1; }
-            93% { text-shadow: 0 0 5px var(--morado), 0 0 10px var(--morado); opacity: 0.8; }
-            95% { text-shadow: none; opacity: 0.7; }
-        }
-
+        @keyframes glitchNeon { 0%, 100% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); } 92% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); opacity: 1; } 93% { text-shadow: 0 0 5px var(--morado), 0 0 10px var(--morado); opacity: 0.8; } 95% { text-shadow: none; opacity: 0.7; } }
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 120px; }
-        
-        /* Estilos de Tarjeta */
         .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
         .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
-        
-        /* Estilo Agotado */
         .card.sin-stock { opacity: 0.6; filter: grayscale(0.8); border-color: #444 !important; }
         .badge-agotado { position: absolute; top: 10px; right: 10px; background: var(--rojo); color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; text-transform: uppercase; }
-
         .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
         .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
-        
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
         .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
         .btn-add:disabled { background: var(--gris-oscuro); cursor: not-allowed; opacity: 0.5; }
-
         .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; }
-
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
         .modal-content { background: #0a0a0a; margin: 8% auto; padding: 25px; border: 1px solid var(--morado); width: 90%; max-width: 450px; border-radius: 25px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #222; }
         .cart-item button { background: var(--rojo); border: none; color: white; padding: 5px 10px; border-radius: 5px; }
-
         .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
         label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
         input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
-
+        .alerta-youtube { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 8px; border-radius: 5px; font-size: 0.7rem; border: 1px solid var(--rojo); margin-bottom: 10px; }
         .alerta-foto { background: rgba(255, 68, 68, 0.15); border: 2px dashed var(--rojo); color: #ffcccc; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.8rem; margin-bottom: 15px; }
         .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; border: none; cursor: pointer; width: 100%; font-size: 1.1rem; }
         .btn-copiar { background: transparent; color: var(--cian); border: 1px solid var(--cian); padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: bold; }
@@ -74,14 +49,11 @@
 <body>
 
     <script>
-        // ==========================================
-        // ⚙️ PANEL DE CONTROL (EDITA AQUÍ)
-        // ==========================================
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
+        const CVU_PAGO = "0000003100067825163080";
 
-        // NOTA: Para agotar un producto agregá stock: false
         const PRODUCTOS = [
             { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true, stock: true },
             { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", stock: true },
@@ -100,20 +72,15 @@
             { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", stock: true },
             { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
         ];
-        // ==========================================
     </script>
 
     <div class="status-top" id="tienda-status"></div>
-
-    <header>
-        <h1>ALN <span>FLUX</span> STORE</h1>
-    </header>
-
+    <header><h1>ALN <span>FLUX</span> STORE</h1></header>
     <div class="catalogo-container" id="main-grid"></div>
-
     <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
     <a href="#" class="btn-soporte" onclick="abrirSoporte(); return false;">🔧 SOPORTE TÉCNICO</a>
 
+    <!-- Modal Carrito -->
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
             <h3 style="color:var(--cian); text-align:center; margin-top:0;">MI PEDIDO</h3>
@@ -121,7 +88,7 @@
             <div id="seccion-pago-total" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 20px 0; color:white;">TOTAL: <span id="total-precio" style="color:var(--cian); font-weight:bold;">$0</span></div>
                 <div style="background: #000; border: 1px dashed var(--cian); padding: 15px; border-radius: 15px; margin: 15px 0; text-align: center;">
-                    <span style="color:#aaa; font-size:0.8rem;">Copiá el Alias y transferí:</span><br>
+                    <span style="color:#aaa; font-size:0.7rem;">Copiá el Alias y transferí:</span><br>
                     <b style="color:white; font-size:1.4rem;" id="alias-txt"></b><br>
                     <button class="btn-copiar" onclick="copiarAlias()" id="btn-copiar-txt">COPIAR ALIAS</button>
                 </div>
@@ -133,6 +100,7 @@
         </div>
     </div>
 
+    <!-- Modal Soporte -->
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center; margin-top:0;">CENTRO DE SOPORTE</h3>
@@ -151,7 +119,7 @@
     <script>
         let carrito = [];
         const statusDiv = document.getElementById('tienda-status');
-        statusDiv.innerText = TIENDA_ABIERTA ? "🟢 ALN FLUX STORE - DISPONIBLE" : "🔴 TIENDA CERRADA TEMPORALMENTE";
+        statusDiv.innerHTML = TIENDA_ABIERTA ? `🟢 ALN FLUX STORE - DISPONIBLE <br> <span class="last-update">Stock actualizado en tiempo real</span>` : `🔴 TIENDA CERRADA TEMPORALMENTE`;
         document.getElementById('alias-txt').innerText = ALIAS_PAGO;
 
         function render() {
@@ -161,16 +129,7 @@
                 const enStock = p.stock !== false;
                 const card = document.createElement('div');
                 card.className = `card ${p.especial ? 'combo' : ''} ${!enStock ? 'sin-stock' : ''}`;
-                
-                card.innerHTML = `
-                    ${!enStock ? '<div class="badge-agotado">Agotado</div>' : ''}
-                    <h2>${p.nombre}</h2>
-                    <span class="precio-tag">$${p.precio.toLocaleString()}</span>
-                    <button class="btn-add" 
-                        ${(!TIENDA_ABIERTA || !enStock) ? 'disabled' : ''} 
-                        onclick="agregarAlCarrito(${p.id})">
-                        ${!enStock ? 'Sin Stock' : (TIENDA_ABIERTA ? 'Añadir al Carrito' : 'Cerrado')}
-                    </button>`;
+                card.innerHTML = `${!enStock ? '<div class="badge-agotado">Agotado</div>' : ''}<h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" ${(!TIENDA_ABIERTA || !enStock) ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${!enStock ? 'Sin Stock' : (TIENDA_ABIERTA ? 'Añadir al Carrito' : 'Cerrado')}</button>`;
                 grid.appendChild(card);
             });
         }
@@ -202,8 +161,11 @@
                 });
                 if(rMail || rFull) {
                     form.innerHTML = "<b>DATOS PARA ACTIVACIÓN:</b>";
-                    if(rMail) form.innerHTML += `<label>Correo para Invitación (Canva/Combo):</label><input id="f-mail" type="email" placeholder="mail@ejemplo.com">`;
-                    if(rFull) form.innerHTML += `<label>Correo YouTube:</label><input id="f-yt-user" type="email" placeholder="usuario@gmail.com"><label>Contraseña YouTube:</label><input id="f-yt-pass" type="text" placeholder="Clave de tu cuenta">`;
+                    if(rFull) {
+                        form.innerHTML += `<div class="alerta-youtube">⚠️ Solo cuentas que no hayan tenido Premium antes.</div>`;
+                        form.innerHTML += `<label>Correo YouTube:</label><input id="f-yt-user" type="email" placeholder="usuario@gmail.com"><label>Contraseña YouTube:</label><input id="f-yt-pass" type="text" placeholder="Clave de la cuenta">`;
+                    }
+                    if(rMail) form.innerHTML += `<label>Mail para Invitación:</label><input id="f-mail" type="email" placeholder="mail@ejemplo.com">`;
                 }
                 document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
             }
@@ -223,12 +185,31 @@
         }
 
         function enviarPedido() {
-            let items = "";
-            let m = document.getElementById('f-mail')?.value || "N/A";
-            let yu = document.getElementById('f-yt-user')?.value || "N/A";
-            let yp = document.getElementById('f-yt-pass')?.value || "N/A";
-            carrito.forEach(p => items += `- ${p.nombre}\n`);
-            let msg = `🛒 *NUEVO PEDIDO ALN FLUX*\n\n${items}\n💰 *TOTAL: ${document.getElementById('total-precio').innerText}*\n\n📩 *DATOS ACTIVACIÓN:*\n- Mail: ${m}\n- YouTube User: ${yu}\n- YouTube Pass: ${yp}`;
+            let listado = "";
+            let subtotal = 0;
+            let tieneMail = false, tieneFull = false;
+
+            carrito.forEach((p, index) => {
+                listado += `${index + 1}) ${p.nombre}\n`;
+                subtotal += p.precio;
+                if(p.tipo === "mail") tieneMail = true;
+                if(p.tipo === "full") tieneFull = true;
+            });
+
+            const m = document.getElementById('f-mail')?.value;
+            const yu = document.getElementById('f-yt-user')?.value;
+            const yp = document.getElementById('f-yt-pass')?.value;
+            const fechaTxt = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}💰 Subtotal: $${subtotal.toLocaleString()}\n💰 Total:$${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🏦 CVU: ${CVU_PAGO}\n\n📅 _${fechaTxt}_\n`;
+            
+            if(m || yu) {
+                msg += `\n--------------------------\n📩 *DATOS PARA ACTIVACIÓN:*\n`;
+                if(yu) msg += `- YT User: ${yu}\n- YT Pass: ${yp}\n`;
+                if(m) msg += `- Mail: ${m}\n`;
+            }
+
+            msg += `\n📦 *Luego envío el comprobante + el carrito por WhatsApp.*`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
@@ -240,7 +221,8 @@
             const user = document.getElementById('sop-user').value;
             const pass = document.getElementById('sop-pass').value;
             const prob = document.getElementById('sop-prob').value;
-            let msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
+            const fechaTxt = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            let msg = `🚨 *TICKET DE SOPORTE*\n📅 _${fechaTxt}_\n\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
         render();
