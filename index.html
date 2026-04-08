@@ -67,7 +67,7 @@
             { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", stock: true },
             { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", stock: true },
             { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", stock: true },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3500, tipo: "mail", stock: true },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", stock: true },
             { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", stock: true },
             { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", stock: true },
             { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
@@ -80,7 +80,6 @@
     <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
     <a href="#" class="btn-soporte" onclick="abrirSoporte(); return false;">🔧 SOPORTE TÉCNICO</a>
 
-    <!-- Modal Carrito -->
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
             <h3 style="color:var(--cian); text-align:center; margin-top:0;">MI PEDIDO</h3>
@@ -100,7 +99,6 @@
         </div>
     </div>
 
-    <!-- Modal Soporte -->
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center; margin-top:0;">CENTRO DE SOPORTE</h3>
@@ -188,30 +186,24 @@
             let listado = "";
             let subtotal = 0;
             let tieneMail = false, tieneFull = false;
-
             carrito.forEach((p, index) => {
                 listado += `${index + 1}) ${p.nombre}\n`;
                 subtotal += p.precio;
                 if(p.tipo === "mail") tieneMail = true;
                 if(p.tipo === "full") tieneFull = true;
             });
-
             const m = document.getElementById('f-mail')?.value;
             const yu = document.getElementById('f-yt-user')?.value;
             const yp = document.getElementById('f-yt-pass')?.value;
-            
-            // FORMATO DE FECHA Y HORA: DD/MM/AAAA - HH:MM
             const ahora = new Date();
             const fechaTxt = ahora.toLocaleDateString('es-AR') + " - " + ahora.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
 
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}💰 Subtotal: $${subtotal.toLocaleString()}\n💰 Total:$${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🏦 CVU: ${CVU_PAGO}\n\n🕒 *HORA Y FECHA:* ${fechaTxt}\n`;
-            
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}💰 Subtotal: $${subtotal.toLocaleString()}\n💰 Total:$${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🏦 CVU: ${CVU_PAGO}\n\n🕒 *Fecha y Hora:* ${fechaTxt}\n`;
             if(m || yu) {
                 msg += `\n--------------------------\n📩 *DATOS PARA ACTIVACIÓN:*\n`;
                 if(yu) msg += `- YT User: ${yu}\n- YT Pass: ${yp}\n`;
                 if(m) msg += `- Mail: ${m}\n`;
             }
-
             msg += `\n📦 *Luego envío el comprobante + el carrito por WhatsApp.*`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
@@ -226,7 +218,7 @@
             const prob = document.getElementById('sop-prob').value;
             const ahora = new Date();
             const fechaTxt = ahora.toLocaleDateString('es-AR') + " - " + ahora.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
-            let msg = `🚨 *TICKET DE SOPORTE*\n🕒 *HORA Y FECHA:* ${fechaTxt}\n\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
+            let msg = `🚨 *TICKET DE SOPORTE*\n🕒 *Fecha y Hora:* ${fechaTxt}\n\n• Plataforma: ${plat}\n• User: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla a continuación)*`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
         render();
