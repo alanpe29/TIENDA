@@ -84,8 +84,9 @@
         // ==========================================
         // 🔐 BÓVEDA DE CUENTAS (EDITA AQUÍ)
         // ==========================================
+        // Aquí agregarás los códigos para Disney u otras más adelante
         const BOVEDA_CUENTAS = {
-            "PRO-999": { plataforma: "Disney Plus", mail: "test@disney.com", pass: "123456", perfil: "1", pin: "0000" }
+            "DIS-TEST": { plataforma: "Disney Plus", mail: "disney@alnflux.com", pass: "flux2026", perfil: "3", pin: "1234" }
         };
 
         const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:
@@ -113,7 +114,6 @@
     <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
     <a href="#" class="btn-soporte" onclick="abrirSoporte(); return false;">🔧 SOPORTE TÉCNICO</a>
 
-    <!-- Modal Carrito -->
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
             <h3 style="color:var(--cian); text-align:center; margin-top:0;">MI PEDIDO</h3>
@@ -133,7 +133,6 @@
         </div>
     </div>
 
-    <!-- Modal Soporte -->
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center; margin-top:0;">CENTRO DE SOPORTE</h3>
@@ -257,25 +256,44 @@
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
-        // LÓGICA DE BÓVEDA
+        // LÓGICA DE BÓVEDA ACTUALIZADA
         function canjearCodigo() {
             const codInput = document.getElementById('input-codigo').value.trim().toUpperCase();
             const resultadoDiv = document.getElementById('resultado-canje');
             const cuenta = BOVEDA_CUENTAS[codInput];
+            
             if (cuenta) {
-                const textoCopiado = `🍿 ENTREGA DE CUENTA - ALN FLUX\n----------------------------------\n📺 Plataforma: ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n${REGLAS_GENERALES}\n----------------------------------\n¡Gracias por tu compra!`;
+                // Generar fechas
+                const ahora = new Date();
+                const vencimiento = new Date();
+                vencimiento.setDate(ahora.getDate() + 30);
+                
+                const fCompra = ahora.toLocaleDateString('es-AR');
+                const fVence = vencimiento.toLocaleDateString('es-AR');
+
+                const textoCopiado = `🍿 ENTREGA DE CUENTA - ALN FLUX\n----------------------------------\n📺 Plataforma: ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n📅 Fecha Compra: ${fCompra}\n📅 Vencimiento: ${fVence}\n\n${REGLAS_GENERALES}\n----------------------------------\n¡Gracias por tu compra!`;
+
                 resultadoDiv.innerHTML = `
                     <div style="background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cian); padding: 15px; border-radius: 15px; margin-top: 20px; text-align: left;">
                         <h4 style="color: var(--cian); margin-top: 0; text-align: center;">✅ CUENTA DESBLOQUEADA</h4>
-                        <p style="font-size:0.9rem;"><b>📺 Plataforma:</b> ${cuenta.plataforma}<br><b>📧 Correo:</b> ${cuenta.mail}<br><b>🔑 Clave:</b> ${cuenta.pass}<br><b>👤 Perfil:</b> ${cuenta.perfil}<br><b>📌 PIN:</b> ${cuenta.pin}</p>
+                        <p style="font-size:0.9rem;">
+                            <b>📺 Plataforma:</b> ${cuenta.plataforma}<br>
+                            <b>📧 Correo:</b> ${cuenta.mail}<br>
+                            <b>🔑 Clave:</b> ${cuenta.pass}<br>
+                            <b>👤 Perfil:</b> ${cuenta.perfil}<br>
+                            <b>📌 PIN:</b> ${cuenta.pin}<br><br>
+                            <b>📅 Fecha Compra:</b> ${fCompra}<br>
+                            <b>📅 Vencimiento:</b> <span style="color:var(--naranja); font-weight:bold;">${fVence}</span>
+                        </p>
                         <hr style="border: 0; border-top: 1px solid #333;">
                         <p style="font-size: 0.65rem; color: #aaa; white-space: pre-line;">${REGLAS_GENERALES}</p>
-                        <button onclick="copiarTextoBoveda(\`${textoCopiado.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" class="btn-add" style="background: var(--verde); margin-top: 10px; font-size:0.7rem;">📋 COPIAR TODO PARA MI CLIENTE</button>
+                        <button onclick="copiarTextoBoveda(\`${textoCopiado.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" class="btn-add" style="background: var(--verde); margin-top: 10px; font-size:0.7rem;">📋 COPIAR TODO PARA MI CLIENTE</button>
                     </div>`;
             } else {
                 resultadoDiv.innerHTML = `<p style="color: var(--rojo); margin-top: 15px; font-weight: bold; font-size:0.8rem;">❌ Código inválido o expirado.</p>`;
             }
         }
+        
         function copiarTextoBoveda(texto) {
             navigator.clipboard.writeText(texto.replace(/\\n/g, '\n'));
             alert("¡Todo copiado! Ya podés pegárselo a tu cliente.");
