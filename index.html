@@ -27,9 +27,15 @@
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
         .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
+        .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
+        .card.sin-stock { opacity: 0.6; filter: grayscale(0.8); border-color: #444 !important; }
+        .badge-agotado { position: absolute; top: 10px; right: 10px; background: var(--rojo); color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; text-transform: uppercase; }
+        .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
+        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
         
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; }
         .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
+        .btn-add:disabled { background: var(--gris-oscuro); cursor: not-allowed; opacity: 0.5; }
         
         .boveda-section { width: 90%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px; margin: 40px auto 40px; text-align: center; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2); }
         .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; box-sizing: border-box; margin: 15px 0; outline: none; }
@@ -38,13 +44,19 @@
         .admin-section:hover { opacity: 1; border-color: var(--cian); }
 
         .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; }
+        .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
         
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
         .modal-content { background: #0a0a0a; margin: 8% auto; padding: 25px; border: 1px solid var(--morado); width: 90%; max-width: 450px; border-radius: 25px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #222; }
+        .cart-item button { background: var(--rojo); border: none; color: white; padding: 5px 10px; border-radius: 5px; }
         
-        .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; }
-        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; border:none; cursor:pointer; }
+        .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
+        label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; }
+        
+        .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; line-height: 1.4; }
+        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -56,6 +68,7 @@
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
+        const CVU_PAGO = "0000003100067825163080";
 
         const PRODUCTOS = [
             { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true, stock: true },
@@ -65,7 +78,15 @@
             { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", stock: true },
             { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", stock: true },
             { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", stock: true },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", stock: true }
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "mail", stock: true },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", stock: true },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", stock: true },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", stock: true },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", stock: true },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", stock: true },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", stock: true },
+            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", stock: true },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
         ];
 
         // 🔐 BÓVEDA CON TUS CUENTAS
@@ -74,7 +95,12 @@
             "ALN-DS448": { plataforma: "Disney Plus", mail: "daxmerlo.hu6@semprastore.xyz", pass: "mplay13mar@", perfil: "2", pin: "2121" }
         };
 
-        const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información.`;
+        const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:
+1. Usar únicamente tu perfil asignado.
+2. No crear ni eliminar perfiles.
+3. Solo ingresar con 1 dispositivo.
+4. No modificar ninguna información de la cuenta.
+5. No agregar numero de celular/ni cambiar.`;
     </script>
 
     <div id="status-top" class="status-top"></div>
@@ -97,99 +123,161 @@
         <div id="res-auditoria" style="font-size:0.7rem; margin-top:10px;"></div>
     </section>
 
-    <div class="cart-float" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span></div>
-    <a href="#" class="btn-soporte" onclick="abrirSoporte(); return false;">🔧 SOPORTE</a>
+    <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
+    <div class="btn-soporte" onclick="abrirSoporte()">🔧 SOPORTE TÉCNICO</div>
 
+    <!-- Modal Carrito -->
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--cian); text-align:center;">MI PEDIDO</h3>
+            <h3 style="color:var(--cian); text-align:center; margin-top:0;">MI PEDIDO</h3>
             <div id="lista-carrito"></div>
-            <div id="seccion-pago" style="display:none;">
-                <div style="text-align:center; margin:15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian); font-weight:bold;">$0</span></div>
-                <div style="background:#000; padding:10px; border-radius:10px; text-align:center; border:1px dashed var(--cian);">
-                    <small>Alias:</small> <b id="alias-txt"></b>
+            <div id="seccion-pago-total" style="display:none;">
+                <div style="font-size: 1.5rem; text-align: center; margin: 20px 0;">TOTAL: <span id="total-precio" style="color:var(--cian); font-weight:bold;">$0</span></div>
+                <div style="background: #000; border: 1px dashed var(--cian); padding: 15px; border-radius: 15px; text-align: center;">
+                    <span style="color:#aaa; font-size:0.7rem;">Copiá el Alias y transferí:</span><br>
+                    <b style="font-size:1.4rem;" id="alias-txt"></b><br>
+                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Alias copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); border-radius:5px; padding:5px; margin-top:5px; cursor:pointer;">COPIAR ALIAS</button>
                 </div>
-                <div id="form-extra"></div>
-                <button onclick="enviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
+                <div id="formulario-dinamico" class="form-datos"></div>
+                <button onclick="enviarPedido()" class="btn-finalizar">FINALIZAR POR WHATSAPP</button>
             </div>
-            <p id="carrito-vacio" style="text-align:center; color:#555;">Carrito vacío</p>
-            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
+            <p id="carrito-vacio" style="text-align:center; color:#666; margin: 40px 0;">Carrito vacío</p>
+            <p onclick="cerrarTodo()" style="margin-top:20px; color:var(--rojo); cursor:pointer; font-weight:bold; text-align:center; font-size:0.8rem;">CERRAR</p>
         </div>
     </div>
 
+    <!-- Modal Soporte -->
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
-            <h3 style="color:var(--naranja); text-align:center;">SOPORTE</h3>
-            <div class="alerta-roja">🚩 REQUISITO: Enviar FOTO o VIDEO del error.</div>
-            <input type="text" id="sop-plat" placeholder="Plataforma">
-            <input type="text" id="sop-user" placeholder="Correo">
-            <textarea id="sop-prob" placeholder="¿Qué falla tiene?" style="width:100%; margin-top:10px;"></textarea>
-            <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR</button>
-            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:15px;">VOLVER</p>
+            <h3 style="color:var(--naranja); text-align:center; margin-top:0;">SOPORTE TÉCNICO</h3>
+            <div class="alerta-roja">🚩 <b>REQUISITO OBLIGATORIO:</b><br>Debés enviar una <b>FOTO o VIDEO</b> del error que te da la cuenta al chat de WhatsApp.</div>
+            <div class="form-datos" style="border-color:var(--naranja);">
+                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
+                <label>Correo de la cuenta:</label><input type="text" id="sop-user">
+                <label>Contraseña:</label><input type="text" id="sop-pass">
+                <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
+            </div>
+            <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR TICKET</button>
+            <p onclick="cerrarTodo()" style="margin-top:20px; color:var(--rojo); cursor:pointer; text-align:center; font-size:0.8rem;">VOLVER</p>
         </div>
     </div>
 
     <script>
         let carrito = [];
         const statusDiv = document.getElementById('status-top');
-        if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 ALN FLUX STORE - DISPONIBLE"; }
-        else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 TIENDA CERRADA"; }
+        
+        if(TIENDA_ABIERTA) {
+            statusDiv.className = "status-top tienda-abierta";
+            statusDiv.innerText = "🟢 ALN FLUX STORE - DISPONIBLE";
+        } else {
+            statusDiv.className = "status-top tienda-cerrada";
+            statusDiv.innerText = "🔴 TIENDA CERRADA TEMPORALMENTE";
+        }
+        
         document.getElementById('alias-txt').innerText = ALIAS_PAGO;
 
         function render() {
-            const grid = document.getElementById('main-grid'); grid.innerHTML = "";
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
-                grid.innerHTML += `<div class="card"><h2>${p.nombre}</h2><span class="precio-tag">$${p.precio}</span><button class="btn-add" onclick="agregarAlCarrito(${p.id})">Añadir</button></div>`;
+                const enStock = p.stock !== false;
+                const card = document.createElement('div');
+                card.className = `card ${p.especial ? 'combo' : ''} ${!enStock ? 'sin-stock' : ''}`;
+                card.innerHTML = `${!enStock ? '<div class="badge-agotado">Agotado</div>' : ''}<h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" ${(!TIENDA_ABIERTA || !enStock) ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${!enStock ? 'Sin Stock' : 'Añadir'}</button>`;
+                grid.appendChild(card);
             });
         }
 
         function agregarAlCarrito(id) {
-            carrito.push(PRODUCTOS.find(x => x.id === id));
+            const p = PRODUCTOS.find(x => x.id === id);
+            carrito.push(p);
             document.getElementById('cart-count').innerText = carrito.length;
         }
 
         function abrirCarrito() {
             const modal = document.getElementById('modalCarrito');
             const lista = document.getElementById('lista-carrito');
-            const pago = document.getElementById('seccion-pago');
-            lista.innerHTML = ""; let t = 0;
-            if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; pago.style.display="none"; }
-            else {
-                document.getElementById('carrito-vacio').style.display="none"; pago.style.display="block";
-                carrito.forEach((p, i) => { t += p.precio; lista.innerHTML += `<div class="cart-item">${p.nombre} <button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; });
-                document.getElementById('total-precio').innerText = "$"+t;
+            const vacio = document.getElementById('carrito-vacio');
+            const pago = document.getElementById('seccion-pago-total');
+            const form = document.getElementById('formulario-dinamico');
+            lista.innerHTML = ""; form.innerHTML = "";
+            let total = 0;
+            if(carrito.length === 0) {
+                vacio.style.display = "block"; pago.style.display = "none";
+            } else {
+                vacio.style.display = "none"; pago.style.display = "block";
+                let tieneMail = false, tieneFull = false;
+                carrito.forEach((p, i) => {
+                    total += p.precio;
+                    lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="eliminar(${i})">X</button></div>`;
+                    if(p.tipo === "mail") tieneMail = true;
+                    if(p.tipo === "full") tieneFull = true;
+                });
+                if(tieneMail || tieneFull) {
+                    form.innerHTML = "<b>DATOS PARA ACTIVACIÓN:</b>";
+                    if(tieneFull) {
+                        form.innerHTML += `<div class="alerta-roja" style="margin-top:10px;">⚠️ IMPORTANTE: Solo cuentas que no hayan tenido Premium antes.</div>`;
+                        form.innerHTML += `<label>Correo YouTube:</label><input id="f-yt-user" type="email"><label>Contraseña YouTube:</label><input id="f-yt-pass" type="text">`;
+                    }
+                    if(tieneMail) form.innerHTML += `<label>Mail para invitación:</label><input id="f-mail" type="email">`;
+                }
+                document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
             }
             modal.style.display = "block";
         }
 
+        function eliminar(index) { carrito.splice(index, 1); document.getElementById('cart-count').innerText = carrito.length; abrirCarrito(); }
         function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        
+        function enviarPedido() {
+            let listado = ""; let subtotal = 0;
+            carrito.forEach((p, i) => { listado += `${i+1}) ${p.nombre}\n`; subtotal += p.precio; });
+            const m = document.getElementById('f-mail')?.value || "No aplica";
+            const yu = document.getElementById('f-yt-user')?.value || "No aplica";
+            const yp = document.getElementById('f-yt-pass')?.value || "No aplica";
+            const ahora = new Date();
+            const fechaTxt = ahora.toLocaleDateString('es-AR') + " - " + ahora.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
 
-        function canjearCodigo() {
-            const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
-            const res = document.getElementById('resultado-canje');
-            const cuenta = BOVEDA_CUENTAS[cod];
-            if (cuenta) {
-                // GENERAR TICKET ÚNICO
-                const sello = Math.floor(Math.random() * 999);
-                const ticket = `TKT-${cod}-${sello}`;
-                const fC = new Date().toLocaleDateString('es-AR');
-                const v = new Date(); v.setDate(v.getDate() + 30);
-                
-                const msgCopia = `🍿 ALN FLUX - ENTREGA\n------------------\n📺 ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n🛡️ TICKET GARANTÍA: ${ticket}\n📅 Vence: ${v.toLocaleDateString('es-AR')}\n\n${REGLAS_GENERALES}`;
-                
-                res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
-                    <h4 style="color:var(--cian); margin:0;">✅ CUENTA REVELADA</h4>
-                    <p style="font-size:0.8rem;">📧 Correo: ${cuenta.mail}<br>🔑 Clave: ${cuenta.pass}<br>👤 Perfil: ${cuenta.perfil}<br>📌 PIN: ${cuenta.pin}<br><br>🛡️ <b>TICKET: ${ticket}</b></p>
-                    <button onclick="navigator.clipboard.writeText(\`${msgCopia.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); font-size:0.7rem;">📋 COPIAR PARA MI CLIENTE</button>
-                </div>`;
-            } else { res.innerHTML = `<p style="color:var(--rojo); font-size:0.8rem;">CÓDIGO INVÁLIDO</p>`; }
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${listado}\n💰 Total: $${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n\n🕒 *Fecha:* ${fechaTxt}\n\n📩 *DATOS ACTIVACIÓN:*\n- YouTube: ${yu} / ${yp}\n- Mail Invitación: ${m}\n\n📦 *Envío comprobante a continuación.*`;
+            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
-        // 🕵️ FUNCIÓN DE RASTREO PARA VOS
+        function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
+        
+        function enviarSoporte() {
+            const plat = document.getElementById('sop-plat').value;
+            const user = document.getElementById('sop-user').value;
+            const pass = document.getElementById('sop-pass').value;
+            const prob = document.getElementById('sop-prob').value;
+            const msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${plat}\n• Usuario: ${user}\n• Pass: ${pass}\n• Problema: ${prob}\n\n*(Adjunto captura de pantalla)*`;
+            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
+        }
+
+        function canjearCodigo() {
+            const codInput = document.getElementById('input-codigo').value.trim().toUpperCase();
+            const res = document.getElementById('resultado-canje');
+            const cuenta = BOVEDA_CUENTAS[codInput];
+            if (cuenta) {
+                const sello = Math.floor(Math.random() * 999);
+                const ticket = `TKT-${codInput}-${sello}`;
+                const ahora = new Date();
+                const v = new Date(); v.setDate(ahora.getDate() + 30);
+                const fC = ahora.toLocaleDateString('es-AR');
+                const fV = v.toLocaleDateString('es-AR');
+                const tC = `🍿 ALN FLUX - ENTREGA\n------------------\n📺 ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n🛡️ TICKET GARANTÍA: ${ticket}\n📅 Compra: ${fC}\n📅 Vence: ${fV}\n\n${REGLAS_GENERALES}`;
+                res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
+                    <h4 style="color:var(--cian); margin:0; text-align:center;">✅ ACCESO DESBLOQUEADO</h4>
+                    <p style="font-size:0.85rem;">📺 <b>${cuenta.plataforma}</b><br>📧 Correo: ${cuenta.mail}<br>🔑 Clave: ${cuenta.pass}<br>👤 Perfil: ${cuenta.perfil}<br>📌 PIN: ${cuenta.pin}<br><br>🛡️ <b>TICKET: ${ticket}</b><br>📅 Vence: <span style="color:var(--naranja)">${fV}</span></p>
+                    <hr style="border:0; border-top:1px solid #333;">
+                    <p style="font-size:0.6rem; color:#aaa; white-space:pre-line;">${REGLAS_GENERALES}</p>
+                    <button onclick="navigator.clipboard.writeText(\`${tC.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); font-size:0.75rem;">📋 COPIAR PARA MI CLIENTE</button>
+                </div>`;
+            } else { res.innerHTML = `<p style="color:var(--rojo); font-weight:bold; margin-top:15px; font-size:0.8rem;">❌ CÓDIGO INVÁLIDO</p>`; }
+        }
+
         function rastrearTicket() {
             const tkt = document.getElementById('input-ticket').value.toUpperCase();
             const res = document.getElementById('res-auditoria');
-            // Buscamos si el ticket contiene alguno de los códigos de la bóveda
             let encontrado = false;
             for (let cod in BOVEDA_CUENTAS) {
                 if (tkt.includes(cod)) {
@@ -198,21 +286,7 @@
                     encontrado = true; break;
                 }
             }
-            if(!encontrado) res.innerHTML = `<span style="color:var(--rojo)">✗ TICKET NO ENCONTRADO O FALSO</span>`;
-        }
-
-        function enviarPedido() {
-            let l = ""; let t = 0; carrito.forEach(p => { l += `- ${p.nombre}\n`; t += p.precio; });
-            const msg = `Hola ALN FLUX STORE 👋\nPedido:\n${l}\nTotal: $${t}\n\nEspero confirmación para enviar el comprobante.`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
-        }
-
-        function enviarSoporte() {
-            const plat = document.getElementById('sop-plat').value;
-            const user = document.getElementById('sop-user').value;
-            const prob = document.getElementById('sop-prob').value;
-            const msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${plat}\n• Usuario: ${user}\n• Problema: ${prob}\n\n*(Envío captura de pantalla)*`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
+            if(!encontrado) res.innerHTML = `<span style="color:var(--rojo)">✗ TICKET NO ENCONTRADO</span>`;
         }
 
         render();
