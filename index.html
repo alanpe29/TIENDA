@@ -8,7 +8,7 @@
         :root {
             --morado: #6200ea; --cian: #00e5ff; --fondo: #050505;
             --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800; --oro: #ffd700;
-            --gris-oscuro: #333;
+            --gris-oscuro: #333; --neon-cyan: #00e5ff80;
         }
         body { margin: 0; padding: 0; background-color: var(--fondo); background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px), radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px); background-size: 550px 550px, 350px 350px, 250px 250px; background-position: 0 0, 40px 60px, 130px 270px; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
         
@@ -24,6 +24,7 @@
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
         .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
+        .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
         .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
         .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
         
@@ -31,9 +32,41 @@
         .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
         .btn-add:disabled { background: #222; color: #555; cursor: not-allowed; }
         
-        .boveda-section { width: 90%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px; margin: 40px auto 120px; text-align: center; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2); }
+        /* ESTILOS BÓVEDA 3D MEJORADA */
+        .boveda-section { width: 95%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px 20px; margin: 40px auto 120px; text-align: center; }
         .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; box-sizing: border-box; margin: 15px 0; outline: none; }
         
+        /* Contenedor Flip Card */
+        .access-card-container { width: 100%; height: 420px; perspective: 1000px; margin-top: 20px; display: none; }
+        .access-card-inner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; }
+        .is-flipped { transform: rotateY(180deg); }
+        
+        /* Caras de la Tarjeta */
+        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
+        
+        /* Frente de la Tarjeta */
+        .card-face-front { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); justify-content: center; align-items: center; padding: 20px; }
+        .service-logo { font-size: 3rem; margin-bottom: 15px; color: white; text-shadow: 0 0 10px currentColor; }
+        .vence-txt { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
+        
+        /* Reverso de la Tarjeta (Datos y Reglas) */
+        .card-face-back { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); transform: rotateY(180deg); justify-content: space-between; padding: 20px; }
+        
+        /* Estilos de Sección de Datos */
+        .data-section { text-align: left; font-size: 0.85rem; line-height: 1.6; }
+        .neon-label { color: var(--cian); text-shadow: 0 0 5px currentColor; font-weight: bold; }
+        
+        /* Estilos de Sección de Reglas */
+        .rules-section { border-top: 1px dashed var(--cian); padding-top: 15px; margin-top: 10px; text-align: left; font-size: 0.6rem; color: #aaa; white-space: pre-line; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 10px; }
+        
+        /* Botones dentro de la Tarjeta */
+        .flip-btn { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; margin-top: 15px; }
+        .copy-btn { background: var(--verde); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 0.8rem; margin-top: 10px; font-weight: bold; text-transform: uppercase; width: 100%; }
+
+        /* Spinner de carga */
+        .spinner { border: 4px solid #333; border-top: 4px solid var(--cian); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; display: none; margin: 15px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
         
@@ -47,15 +80,13 @@
         input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
         
         .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; }
-        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
+        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 166px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
     </style>
 </head>
 <body>
 
     <script>
-        // ==========================================
-        // ⚙️ PANEL DE CONTROL
-        // ==========================================
+        // PANEL DE CONTROL
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
@@ -81,11 +112,11 @@
         ];
 
         const BOVEDA_CUENTAS = {
-            "ALN-AP722": { plataforma: "Amazon Prime Video", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030" },
-            "ALN-HB531": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "1", pin: "1111" },
-            "ALN-HB010": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "2", pin: "2121" },
-            "ALN-HB202": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "3", pin: "1313" },
-            "ALN-HB947": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141" }
+            "ALN-AP722": { plataforma: "Amazon Prime", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030", color: "#ff9800", emoji: "🟠" },
+            "ALN-HB531": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "1", pin: "1111", color: "#6200ea", emoji: "🟣" },
+            "ALN-HB010": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "2", pin: "2121", color: "#6200ea", emoji: "🟣" },
+            "ALN-HB202": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "3", pin: "1313", color: "#6200ea", emoji: "🟣" },
+            "ALN-HB947": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141", color: "#6200ea", emoji: "🟣" }
         };
 
         const REGLAS_TEXTO = `Gracias por su compra. 🚀
@@ -109,13 +140,48 @@
         <h3 style="color: var(--morado); margin-top: 0;"><span style="color: var(--oro);">🔒</span> BÓVEDA DE CLIENTES</h3>
         <input type="text" id="input-codigo" class="boveda-input" placeholder="INGRESA CÓDIGO">
         <button onclick="canjearCodigo()" class="btn-add" style="background:var(--morado) !important; color:white !important;">REVELAR ACCESO</button>
+        
+        <div id="spinner-loader" class="spinner"></div>
+
+        <div id="access-card-container" class="access-card-container">
+            <div id="access-card-inner" class="access-card-inner">
+                
+                <div id="flip-front" class="card-face card-face-front">
+                    <div id="flip-logo" class="service-logo"></div>
+                    <div id="flip-vence" class="vence-txt"></div>
+                    <button class="flip-btn" onclick="document.getElementById('access-card-inner').classList.add('is-flipped')">Ver Datos 🔄</button>
+                </div>
+
+                <div id="flip-back" class="card-face card-face-back">
+                    <div class="data-section">
+                        <span class="neon-label">📺</span> <span id="txt-plat"></span><br>
+                        <span class="neon-label">📧 Correo:</span> <span id="txt-mail"></span><br>
+                        <span class="neon-label">🔑 Contraseña:</span> <span id="txt-pass"></span><br>
+                        <span class="neon-label">👤 Perfil:</span> <span id="txt-perfil"></span><br>
+                        <span class="neon-label">📌 PIN:</span> <span id="txt-pin"></span>
+                    </div>
+
+                    <div class="rules-section">
+                        <b>⚠ REGLAS DE USO OBLIGATORIAS:</b>
+                        1. Usar únicamente tu perfil asignado.
+                        2. No crear ni eliminar perfiles.
+                        3. Solo ingresar con 1 dispositivo.
+                        4. No modificar ninguna información.
+                        5. No agregar numero de celular.
+                    </div>
+
+                    <button id="btn-copy-card" class="copy-btn">COPIAR TODO ✅</button>
+                </div>
+
+            </div>
+        </div>
+
         <div id="resultado-canje"></div>
     </section>
 
     <div class="cart-float" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
     <div class="btn-soporte" onclick="abrirSoporte()">🔧 SOPORTE TÉCNICO</div>
 
-    <!-- Modal Carrito -->
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
             <h3 style="color:var(--cian); text-align:center;">MI PEDIDO</h3>
@@ -123,7 +189,6 @@
             <div id="seccion-pago" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
                 
-                <!-- SECCIÓN DE PAGO MEJORADA -->
                 <div style="background:#000; padding:15px; border-radius:15px; text-align:center; border:1px dashed var(--cian); margin-bottom:15px;">
                     <span style="font-size:0.75rem; color:var(--cian); font-weight:bold;">MERCADO PAGO</span><br>
                     <span style="font-size:0.7rem; color:#aaa;">Alias:</span><br>
@@ -144,7 +209,6 @@
         </div>
     </div>
 
-    <!-- Modal Soporte -->
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
@@ -166,99 +230,83 @@
         document.getElementById('alias-txt').innerText = ALIAS_PAGO;
         document.getElementById('nombre-txt').innerText = NOMBRE_PAGO;
         
-        if(TIENDA_ABIERTA) {
-            statusDiv.className = "status-top tienda-abierta";
-            statusDiv.innerText = "🟢 DISPONIBLE";
-        } else {
-            statusDiv.className = "status-top tienda-cerrada";
-            statusDiv.innerText = "🔴 CERRADO";
-        }
+        if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 DISPONIBLE"; }
+        else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 CERRADO"; }
 
         function render() {
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
-                grid.innerHTML += `<div class="card">
-                    <h2>${p.nombre}</h2>
-                    <span class="precio-tag">$${p.precio.toLocaleString()}</span>
-                    <button class="btn-add" ${!TIENDA_ABIERTA ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">
-                        ${TIENDA_ABIERTA ? 'Añadir' : 'Cerrado'}
-                    </button>
-                </div>`;
+                grid.innerHTML += `<div class="card ${p.especial?'combo':''}"><h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" ${!TIENDA_ABIERTA ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA ? 'Añadir' : 'Cerrado'}</button></div>`;
             });
-        }
-
-        function agregarAlCarrito(id) {
-            if(!TIENDA_ABIERTA) return;
-            carrito.push(PRODUCTOS.find(x => x.id === id));
-            document.getElementById('cart-count').innerText = carrito.length;
-        }
-
-        function abrirCarrito() {
-            if(!TIENDA_ABIERTA) { alert("Tienda cerrada"); return; }
-            const modal = document.getElementById('modalCarrito');
-            const lista = document.getElementById('lista-carrito');
-            const pago = document.getElementById('seccion-pago');
-            const form = document.getElementById('form-datos');
-            lista.innerHTML = ""; form.innerHTML = ""; let t = 0;
-            if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; pago.style.display="none"; }
-            else {
-                document.getElementById('carrito-vacio').style.display="none"; pago.style.display="block";
-                let hasYT = false, hasMail = false;
-                carrito.forEach((p, i) => {
-                    t += p.precio;
-                    lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`;
-                    if(p.tipo === "full") hasYT = true;
-                    if(p.tipo === "mail") hasMail = true;
-                });
-                if(hasYT) form.innerHTML += `<div class="alerta-roja">Solo cuentas nuevas para YouTube.</div><label>Correo YouTube:</label><input id="f-yt-user"><label>Clave YouTube:</label><input id="f-yt-pass">`;
-                if(hasMail) form.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`;
-                document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
-            }
-            modal.style.display = "block";
-        }
-
-        function enviarPedido() {
-            let items = ""; let total = 0;
-            let hasYT = false, hasMail = false;
-            carrito.forEach((p, i) => { items += `${i+1}) ${p.nombre}\n`; total += p.precio; if(p.tipo === "full") hasYT = true; if(p.tipo === "mail") hasMail = true; });
-            const ytU = document.getElementById('f-yt-user')?.value;
-            const ytP = document.getElementById('f-yt-pass')?.value;
-            const mail = document.getElementById('f-mail')?.value;
-            const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`;
-            if(hasYT || hasMail) {
-                msg += `\n📩 DATOS ACTIVACIÓN:`;
-                if(hasYT) msg += `\n• YouTube: ${ytU} / ${ytP}`;
-                if(hasMail) msg += `\n• Mail Invitación: ${mail}`;
-            }
-            msg += `\n\n📦 Envío comprobante a continuación.`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
         function canjearCodigo() {
             const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
             const res = document.getElementById('resultado-canje');
-            const c = BOVEDA_CUENTAS[cod];
-            if (c) {
-                const v = new Date(); v.setDate(v.getDate() + 30);
-                const vencTxt = v.toLocaleDateString();
-                const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plataforma: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Contraseña: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS_TEXTO}`;
-                res.innerHTML = `<div style="background:rgba(0,229,255,0.05); border:1px solid #00e5ff80; padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
-                    <b style="color:var(--verde);">✅ ACCESO OK</b><br>
-                    📺 Plataforma: ${c.plataforma}<br>📧 Correo: ${c.mail}<br>🔑 Contraseña: ${c.pass}<br>👤 Perfil: ${c.perfil}<br>📌 PIN: ${c.pin}<br>📅 Vence: ${vencTxt}
-                    <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
-                    <div style="font-size:0.65rem; color:#aaa; white-space:pre-line; background:rgba(255,255,255,0.05); padding:10px; border-radius:10px;">${REGLAS_TEXTO}</div>
-                    <button onclick="navigator.clipboard.writeText(\`${textCopia.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); margin-top:15px;">COPIAR PARA CLIENTE</button>
-                </div>`;
-            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:15px;">❌ CÓDIGO INVÁLIDO</p>`; }
+            const cContainer = document.getElementById('access-card-container');
+            const loader = document.getElementById('spinner-loader');
+            const cInner = document.getElementById('access-card-inner');
+
+            // Reset
+            cContainer.style.display = "none";
+            cInner.classList.remove('is-flipped');
+            res.innerHTML = "";
+
+            if (!cod) return;
+
+            // Animación de carga
+            loader.style.display = "block";
+
+            setTimeout(() => {
+                loader.style.display = "none";
+                const c = BOVEDA_CUENTAS[cod];
+
+                if (c) {
+                    const v = new Date(); v.setDate(v.getDate() + 30);
+                    const vencTxt = v.toLocaleDateString();
+
+                    // Cargar datos en la tarjeta
+                    document.getElementById('txt-plat').innerText = c.plataforma;
+                    document.getElementById('txt-mail').innerText = c.mail;
+                    document.getElementById('txt-pass').innerText = c.pass;
+                    document.getElementById('txt-perfil').innerText = c.perfil;
+                    document.getElementById('txt-pin').innerText = c.pin;
+
+                    // Cargar Frente (Logo y Vence)
+                    document.getElementById('flip-logo').innerText = c.emoji;
+                    document.getElementById('flip-vence').innerText = `Vence: ${vencTxt}`;
+
+                    // Tuneado de Color de Neón según la plataforma
+                    const neonColor = c.color || "#00e5ff";
+                    const neonShadow = `${neonColor}80`;
+                    document.getElementById('flip-front').style.borderColor = neonColor;
+                    document.getElementById('flip-front').style.boxShadow = `0 0 20px ${neonShadow}`;
+                    document.getElementById('flip-back').style.borderColor = neonColor;
+                    document.getElementById('flip-back').style.boxShadow = `0 0 20px ${neonShadow}`;
+                    document.getElementById('flip-logo').style.color = neonColor;
+
+                    // Mensaje de Copiado Completo (Reglas Incluidas)
+                    const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plataforma: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Contraseña: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS_TEXTO}`;
+                    
+                    document.getElementById('btn-copy-card').onclick = () => {
+                        navigator.clipboard.writeText(textCopia).then(() => alert('Datos y Reglas copiados.'));
+                    };
+
+                    cContainer.style.display = "block";
+
+                } else {
+                    res.innerHTML = `<p style="color:var(--rojo); margin-top:15px; font-weight:bold;">❌ CÓDIGO INVÁLIDO</p>`;
+                }
+            }, 2000); // 2 segundos de carga "espectacular"
         }
 
+        // Resto de funciones (iguales que antes)
+        function agregarAlCarrito(id) { if(!TIENDA_ABIERTA) return; carrito.push(PRODUCTOS.find(x => x.id === id)); document.getElementById('cart-count').innerText = carrito.length; }
+        function abrirCarrito() { if(!TIENDA_ABIERTA) { alert("Tienda cerrada"); return; } const modal = document.getElementById('modalCarrito'); const lista = document.getElementById('lista-carrito'); const pago = document.getElementById('seccion-pago'); const form = document.getElementById('form-datos'); lista.innerHTML = ""; form.innerHTML = ""; let t = 0; if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; pago.style.display="none"; } else { document.getElementById('carrito-vacio').style.display="none"; pago.style.display="block"; let hasYT = false, hasMail = false; carrito.forEach((p, i) => { t += p.precio; lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(p.tipo === "full") hasYT = true; if(p.tipo === "mail") hasMail = true; }); if(hasYT) form.innerHTML += `<div class="alerta-roja">Solo cuentas nuevas para YouTube.</div><label>Correo YouTube:</label><input id="f-yt-user"><label>Clave YouTube:</label><input id="f-yt-pass">`; if(hasMail) form.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`; document.getElementById('total-precio').innerText = "$" + t.toLocaleString(); } modal.style.display = "block"; }
+        function enviarPedido() { let items = ""; let total = 0; let hasYT = false, hasMail = false; carrito.forEach((p, i) => { items += `${i+1}) ${p.nombre}\n`; total += p.precio; if(p.tipo === "full") hasYT = true; if(p.tipo === "mail") hasMail = true; }); const ytU = document.getElementById('f-yt-user')?.value; const ytP = document.getElementById('f-yt-pass')?.value; const mail = document.getElementById('f-mail')?.value; const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}); let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`; if(hasYT || hasMail) { msg += `\n📩 DATOS ACTIVACIÓN:`; if(hasYT) msg += `\n• YouTube: ${ytU} / ${ytP}`; if(hasMail) msg += `\n• Mail Invitación: ${mail}`; } msg += `\n\n📦 Envío comprobante a continuación.`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
         function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
-        function enviarSoporte() {
-            const msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${document.getElementById('sop-plat').value}\n• Usuario: ${document.getElementById('sop-user').value}\n• Pass: ${document.getElementById('sop-pass').value}\n• Problema: ${document.getElementById('sop-prob').value}\n\n*(Adjunto captura de pantalla)*`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
-        }
+        function enviarSoporte() { const msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${document.getElementById('sop-plat').value}\n• Usuario: ${document.getElementById('sop-user').value}\n• Pass: ${document.getElementById('sop-pass').value}\n• Problema: ${document.getElementById('sop-prob').value}\n\n*(Adjunto captura de pantalla)*`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
         function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         render();
     </script>
