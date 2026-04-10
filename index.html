@@ -53,9 +53,6 @@
 <body>
 
     <script>
-        // ==========================================
-        // ⚙️ PANEL DE CONTROL
-        // ==========================================
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
@@ -79,7 +76,6 @@
             { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo" }
         ];
 
-        // 🔐 BÓVEDA ACTUALIZADA
         const BOVEDA_CUENTAS = {
             "ALN-DS448": { plataforma: "Disney Plus", mail: "daxmerlo.hu6@semprastore.xyz", pass: "mplay13mar@", perfil: "2", pin: "2121" },
             "ALN-HB531": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "1", pin: "1111" },
@@ -97,7 +93,7 @@
     <div class="catalogo-container" id="main-grid"></div>
 
     <section class="boveda-section">
-        <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
+        <h3 style="color: var(--morado); margin-top: 0;"><span style="color: var(--oro);">🔒</span> BÓVEDA DE CLIENTES</h3>
         <input type="text" id="input-codigo" class="boveda-input" placeholder="INGRESA CÓDIGO">
         <button onclick="canjearCodigo()" class="btn-add">REVELAR ACCESO</button>
         <div id="resultado-canje"></div>
@@ -188,20 +184,16 @@
                 if(p.tipo === "full") hasYT = true;
                 if(p.tipo === "mail") hasMail = true;
             });
-            
             const ytU = document.getElementById('f-yt-user')?.value;
             const ytP = document.getElementById('f-yt-pass')?.value;
             const mail = document.getElementById('f-mail')?.value;
             const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
             let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🕒 Fecha: ${fecha}\n`;
-
             if(hasYT || hasMail) {
                 msg += `\n📩 DATOS ACTIVACIÓN:`;
                 if(hasYT) msg += `\n• YouTube: ${ytU} / ${ytP}`;
                 if(hasMail) msg += `\n• Mail Invitación: ${mail}`;
             }
-
             msg += `\n\n📦 Envío comprobante a continuación.`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
@@ -218,12 +210,25 @@
             const c = BOVEDA_CUENTAS[cod];
             if (c) {
                 const v = new Date(); v.setDate(v.getDate() + 30);
-                const t = `🍿 ENTREGA ALN FLUX\n------------------\n📺 ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS}`;
-                res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
-                    <b>✅ ACCESO OK</b><br>📺 ${c.plataforma}<br>📧 ${c.mail}<br>🔑 ${c.pass}<br>👤 Perfil: ${c.perfil}<br>📌 PIN: ${c.pin}<br>📅 Vence: ${v.toLocaleDateString()}<br><br>
-                    <button onclick="navigator.clipboard.writeText(\`${t.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde)">COPIAR PARA CLIENTE</button>
+                const vencTxt = v.toLocaleDateString();
+                const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS}`;
+                res.innerHTML = `
+                <div style="background:rgba(0,229,255,0.05); border:1px solid #00e5ff80; padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
+                    <div style="margin-bottom:10px;"><span style="color:var(--verde);">✅</span> <b style="letter-spacing:1px;">ACCESO OK</b></div>
+                    <div style="font-size:0.9rem; line-height:1.6;">
+                        📺 ${c.plataforma}<br>
+                        📧 ${c.mail}<br>
+                        🔑 ${c.pass}<br>
+                        👤 Perfil: ${c.perfil}<br>
+                        📌 PIN: ${c.pin}<br>
+                        📅 Vence: ${vencTxt}
+                    </div>
+                    <button onclick="navigator.clipboard.writeText(\`${textCopia.replace(/\n/g, '\\n')}\`); alert('Copiado');" 
+                        class="btn-add" style="background:var(--verde); margin-top:15px; font-size:0.8rem;">
+                        COPIAR PARA CLIENTE
+                    </button>
                 </div>`;
-            } else { res.innerHTML = `<p style="color:var(--rojo)">CÓDIGO INVÁLIDO</p>`; }
+            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:15px; font-weight:bold;">❌ CÓDIGO INVÁLIDO</p>`; }
         }
         render();
     </script>
