@@ -84,7 +84,16 @@
             "ALN-HB947": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141" }
         };
 
-        const REGLAS = `⚠️ REGLAS:\n1. Usar solo tu perfil.\n2. No cambiar nada.\n3. Solo 1 dispositivo.`;
+        const REGLAS_TEXTO = `Gracias por su compra. 🚀
+
+⚠ Reglas de uso:
+1. Usar únicamente tu perfil asignado.
+2. No crear ni eliminar perfiles.
+3. Solo ingresar con 1 dispositivo.
+4. No modificar ninguna información de la cuenta.
+5. No agregar numero de celular/ni cambiar.
+
+☠️ En caso de no cumplir las reglas se le dará de baja el servicio y no habrá devolución.`;
     </script>
 
     <div id="status-top" class="status-top"></div>
@@ -211,18 +220,21 @@
             if (c) {
                 const v = new Date(); v.setDate(v.getDate() + 30);
                 const vencTxt = v.toLocaleDateString();
-                const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS}`;
+                const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plataforma: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Contraseña: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS_TEXTO}`;
+                
                 res.innerHTML = `
                 <div style="background:rgba(0,229,255,0.05); border:1px solid #00e5ff80; padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
                     <div style="margin-bottom:10px;"><span style="color:var(--verde);">✅</span> <b style="letter-spacing:1px;">ACCESO OK</b></div>
                     <div style="font-size:0.9rem; line-height:1.6;">
-                        📺 ${c.plataforma}<br>
-                        📧 ${c.mail}<br>
-                        🔑 ${c.pass}<br>
+                        📺 Plataforma: ${c.plataforma}<br>
+                        📧 Correo: ${c.mail}<br>
+                        🔑 Contraseña: ${c.pass}<br>
                         👤 Perfil: ${c.perfil}<br>
                         📌 PIN: ${c.pin}<br>
                         📅 Vence: ${vencTxt}
                     </div>
+                    <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
+                    <div style="font-size:0.65rem; color:#aaa; white-space:pre-line; background:rgba(255,255,255,0.05); padding:10px; border-radius:10px;">${REGLAS_TEXTO}</div>
                     <button onclick="navigator.clipboard.writeText(\`${textCopia.replace(/\n/g, '\\n')}\`); alert('Copiado');" 
                         class="btn-add" style="background:var(--verde); margin-top:15px; font-size:0.8rem;">
                         COPIAR PARA CLIENTE
