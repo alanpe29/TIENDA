@@ -24,7 +24,6 @@
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
         .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
-        .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
         .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
         .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
         
@@ -60,6 +59,7 @@
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
+        const NOMBRE_PAGO = "Alan Nicolas Perez";
 
         const PRODUCTOS = [
             { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true },
@@ -122,6 +122,20 @@
             <div id="lista-carrito"></div>
             <div id="seccion-pago" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
+                
+                <!-- SECCIÓN DE PAGO MEJORADA -->
+                <div style="background:#000; padding:15px; border-radius:15px; text-align:center; border:1px dashed var(--cian); margin-bottom:15px;">
+                    <span style="font-size:0.75rem; color:var(--cian); font-weight:bold;">MERCADO PAGO</span><br>
+                    <span style="font-size:0.7rem; color:#aaa;">Alias:</span><br>
+                    <b style="font-size:1.4rem; color:white;" id="alias-txt"></b><br>
+                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Alias copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); border-radius:5px; padding:3px 8px; margin-top:5px; cursor:pointer; font-size:0.65rem;">COPIAR ALIAS</button>
+                    <div style="margin-top:10px; border-top:1px solid #222; padding-top:10px;">
+                        <span style="font-size:0.7rem; color:#aaa;">Titular:</span><br>
+                        <b style="font-size:0.9rem; color:white;" id="nombre-txt"></b><br>
+                        <button onclick="navigator.clipboard.writeText(NOMBRE_PAGO); alert('Nombre copiado');" style="background:transparent; color:#888; border:1px solid #444; border-radius:5px; padding:3px 8px; margin-top:5px; cursor:pointer; font-size:0.6rem;">COPIAR NOMBRE</button>
+                    </div>
+                </div>
+
                 <div id="form-datos" class="form-datos"></div>
                 <button onclick="enviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
             </div>
@@ -149,6 +163,8 @@
     <script>
         let carrito = [];
         const statusDiv = document.getElementById('status-top');
+        document.getElementById('alias-txt').innerText = ALIAS_PAGO;
+        document.getElementById('nombre-txt').innerText = NOMBRE_PAGO;
         
         if(TIENDA_ABIERTA) {
             statusDiv.className = "status-top tienda-abierta";
@@ -162,7 +178,7 @@
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
-                grid.innerHTML += `<div class="card ${p.especial?'combo':''}">
+                grid.innerHTML += `<div class="card">
                     <h2>${p.nombre}</h2>
                     <span class="precio-tag">$${p.precio.toLocaleString()}</span>
                     <button class="btn-add" ${!TIENDA_ABIERTA ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">
@@ -209,7 +225,8 @@
             const ytU = document.getElementById('f-yt-user')?.value;
             const ytP = document.getElementById('f-yt-pass')?.value;
             const mail = document.getElementById('f-mail')?.value;
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n`;
+            const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`;
             if(hasYT || hasMail) {
                 msg += `\n📩 DATOS ACTIVACIÓN:`;
                 if(hasYT) msg += `\n• YouTube: ${ytU} / ${ytP}`;
@@ -231,7 +248,7 @@
                     <b style="color:var(--verde);">✅ ACCESO OK</b><br>
                     📺 Plataforma: ${c.plataforma}<br>📧 Correo: ${c.mail}<br>🔑 Contraseña: ${c.pass}<br>👤 Perfil: ${c.perfil}<br>📌 PIN: ${c.pin}<br>📅 Vence: ${vencTxt}
                     <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
-                    <div style="font-size:0.65rem; color:#aaa; white-space:pre-line;">${REGLAS_TEXTO}</div>
+                    <div style="font-size:0.65rem; color:#aaa; white-space:pre-line; background:rgba(255,255,255,0.05); padding:10px; border-radius:10px;">${REGLAS_TEXTO}</div>
                     <button onclick="navigator.clipboard.writeText(\`${textCopia.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); margin-top:15px;">COPIAR PARA CLIENTE</button>
                 </div>`;
             } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:15px;">❌ CÓDIGO INVÁLIDO</p>`; }
