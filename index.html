@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>ALN FLUX STORE | Streaming Premium</title>
     <style>
         :root {
@@ -28,14 +25,11 @@
         .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
         .card.combo { border: 1px solid var(--oro); background: linear-gradient(145deg, #111, #1a1600); }
-        .card.sin-stock { opacity: 0.6; filter: grayscale(0.8); border-color: #444 !important; }
-        .badge-agotado { position: absolute; top: 10px; right: 10px; background: var(--rojo); color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; text-transform: uppercase; }
         .card h2 { margin: 0 0 10px 0; font-size: 1.1rem; line-height: 1.2; }
         .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
         
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; }
         .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
-        .btn-add:disabled { background: var(--gris-oscuro); cursor: not-allowed; opacity: 0.5; }
         
         .boveda-section { width: 90%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px; margin: 40px auto 120px; text-align: center; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2); }
         .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; box-sizing: border-box; margin: 15px 0; outline: none; }
@@ -50,9 +44,9 @@
         
         .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
         label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
+        input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
         
-        .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; line-height: 1.4; }
+        .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; }
         .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
     </style>
 </head>
@@ -65,28 +59,27 @@
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
-        const CVU_PAGO = "0000003100067825163080";
 
         const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true, stock: true },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", stock: true },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", stock: true },
-            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", stock: true },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", stock: true },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", stock: true },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", stock: true },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "mail", stock: true },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", stock: true },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", stock: true },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", stock: true },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", stock: true },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", stock: true },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", stock: true },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", stock: true },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
+            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", especial: true },
+            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo" },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo" },
+            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo" },
+            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo" },
+            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo" },
+            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo" },
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo" },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo" },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full" },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full" },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail" },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail" },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo" },
+            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo" },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo" }
         ];
 
-        // 🔐 BÓVEDA CON TUS CUENTAS CARGADAS (CON COMAS CORREGIDAS)
+        // 🔐 BÓVEDA ACTUALIZADA
         const BOVEDA_CUENTAS = {
             "ALN-DS448": { plataforma: "Disney Plus", mail: "daxmerlo.hu6@semprastore.xyz", pass: "mplay13mar@", perfil: "2", pin: "2121" },
             "ALN-HB531": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "1", pin: "1111" },
@@ -95,7 +88,7 @@
             "ALN-HB947": { plataforma: "Hbo Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141" }
         };
 
-        const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información.\n5. No agregar numero de celular/ni cambiar.`;
+        const REGLAS = `⚠️ REGLAS:\n1. Usar solo tu perfil.\n2. No cambiar nada.\n3. Solo 1 dispositivo.`;
     </script>
 
     <div id="status-top" class="status-top"></div>
@@ -105,109 +98,132 @@
 
     <section class="boveda-section">
         <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
-        <p style="font-size: 0.8rem; color: #888;">Ingresá tu código de canje para retirar tu cuenta.</p>
-        <input type="text" id="input-codigo" class="boveda-input" placeholder="CÓDIGO AQUÍ">
+        <input type="text" id="input-codigo" class="boveda-input" placeholder="INGRESA CÓDIGO">
         <button onclick="canjearCodigo()" class="btn-add">REVELAR ACCESO</button>
         <div id="resultado-canje"></div>
     </section>
 
-    <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
-    <div class="btn-soporte" onclick="abrirSoporte()">🔧 SOPORTE TÉCNICO</div>
+    <div class="cart-float" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span></div>
+    <div class="btn-soporte" onclick="abrirSoporte()">🔧 SOPORTE</div>
 
     <div id="modalCarrito" class="modal">
         <div class="modal-content">
-            <h3 style="color:var(--cian); text-align:center; margin-top:0;">MI PEDIDO</h3>
+            <h3 style="color:var(--cian); text-align:center;">MI PEDIDO</h3>
             <div id="lista-carrito"></div>
-            <div id="seccion-pago-total" style="display:none;">
-                <div style="font-size: 1.5rem; text-align: center; margin: 20px 0;">TOTAL: <span id="total-precio" style="color:var(--cian); font-weight:bold;">$0</span></div>
-                <div style="background: #000; border: 1px dashed var(--cian); padding: 15px; border-radius: 15px; text-align: center;">
-                    <span style="color:#aaa; font-size:0.7rem;">Copiá el Alias y transferí:</span><br>
-                    <b style="font-size:1.4rem;" id="alias-txt"></b><br>
-                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Alias copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); border-radius:5px; padding:5px; margin-top:5px; cursor:pointer;">COPIAR ALIAS</button>
-                </div>
-                <div id="formulario-dinamico" class="form-datos"></div>
-                <button onclick="enviarPedido()" class="btn-finalizar">FINALIZAR POR WHATSAPP</button>
+            <div id="seccion-pago" style="display:none;">
+                <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
+                <div style="background:#000; padding:10px; border-radius:10px; text-align:center; border:1px dashed var(--cian);">Alias: <b id="alias-txt"></b></div>
+                <div id="form-datos" class="form-datos"></div>
+                <button onclick="enviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
             </div>
-            <p id="carrito-vacio" style="text-align:center; color:#666; margin: 40px 0;">Carrito vacío</p>
-            <p onclick="cerrarTodo()" style="margin-top:20px; color:var(--rojo); cursor:pointer; font-weight:bold; text-align:center; font-size:0.8rem;">CERRAR</p>
+            <p id="carrito-vacio" style="text-align:center; color:#555;">Carrito vacío</p>
+            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
         </div>
     </div>
 
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
-            <h3 style="color:var(--naranja); text-align:center; margin-top:0;">SOPORTE TÉCNICO</h3>
-            <div class="alerta-roja">🚩 <b>REQUISITO OBLIGATORIO:</b><br>Debés enviar una <b>FOTO o VIDEO</b> del error que te da la cuenta al chat de WhatsApp.</div>
-            <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
-                <label>Correo de la cuenta:</label><input type="text" id="sop-user">
-                <label>Contraseña:</label><input type="text" id="sop-pass">
-                <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
-            </div>
-            <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR TICKET</button>
-            <p onclick="cerrarTodo()" style="margin-top:20px; color:var(--rojo); cursor:pointer; text-align:center; font-size:0.8rem;">VOLVER</p>
+            <h3 style="color:var(--naranja); text-align:center;">SOPORTE</h3>
+            <div class="alerta-roja">🚩 REQUISITO: Enviar FOTO o VIDEO del error.</div>
+            <input type="text" id="sop-plat" placeholder="Plataforma">
+            <input type="text" id="sop-user" placeholder="Correo">
+            <input type="text" id="sop-pass" placeholder="Clave">
+            <textarea id="sop-prob" style="width:100%; margin-top:10px; height:60px;" placeholder="Problema"></textarea>
+            <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR</button>
+            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:15px;">VOLVER</p>
         </div>
     </div>
 
     <script>
         let carrito = [];
         const statusDiv = document.getElementById('status-top');
-        if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 ALN FLUX STORE - DISPONIBLE"; }
-        else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 TIENDA CERRADA TEMPORALMENTE"; }
+        if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 DISPONIBLE"; }
+        else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 CERRADO"; }
         document.getElementById('alias-txt').innerText = ALIAS_PAGO;
 
         function render() {
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
-                const enStock = p.stock !== false;
-                const card = document.createElement('div');
-                card.className = `card ${p.especial ? 'combo' : ''} ${!enStock ? 'sin-stock' : ''}`;
-                card.innerHTML = `${!enStock ? '<div class="badge-agotado">Agotado</div>' : ''}<h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" ${(!TIENDA_ABIERTA || !enStock) ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${!enStock ? 'Sin Stock' : 'Añadir'}</button>`;
-                grid.appendChild(card);
+                grid.innerHTML += `<div class="card ${p.especial?'combo':''}"><h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-add" onclick="agregarAlCarrito(${p.id})">Añadir</button></div>`;
             });
         }
 
-        function agregarAlCarrito(id) { const p = PRODUCTOS.find(x => x.id === id); carrito.push(p); document.getElementById('cart-count').innerText = carrito.length; }
+        function agregarAlCarrito(id) {
+            carrito.push(PRODUCTOS.find(x => x.id === id));
+            document.getElementById('cart-count').innerText = carrito.length;
+        }
+
         function abrirCarrito() {
-            const modal = document.getElementById('modalCarrito'); const lista = document.getElementById('lista-carrito'); const pago = document.getElementById('seccion-pago-total'); const form = document.getElementById('formulario-dinamico');
-            lista.innerHTML = ""; form.innerHTML = ""; let total = 0;
-            if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display = "block"; pago.style.display = "none"; }
+            const modal = document.getElementById('modalCarrito');
+            const lista = document.getElementById('lista-carrito');
+            const pago = document.getElementById('seccion-pago');
+            const form = document.getElementById('form-datos');
+            lista.innerHTML = ""; form.innerHTML = ""; let t = 0;
+            if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; pago.style.display="none"; }
             else {
-                document.getElementById('carrito-vacio').style.display = "none"; pago.style.display = "block";
-                let tieneMail = false, tieneFull = false;
-                carrito.forEach((p, i) => { total += p.precio; lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="eliminar(${i})">X</button></div>`; if(p.tipo === "mail") tieneMail = true; if(p.tipo === "full") tieneFull = true; });
-                if(tieneMail || tieneFull) {
-                    form.innerHTML = "<b>DATOS PARA ACTIVACIÓN:</b>";
-                    if(tieneFull) { form.innerHTML += `<div class="alerta-roja" style="margin-top:10px;">⚠️ IMPORTANTE: Solo cuentas que no hayan tenido Premium antes.</div><label>Correo YouTube:</label><input id="f-yt-user" type="email"><label>Contraseña YouTube:</label><input id="f-yt-pass" type="text">`; }
-                    if(tieneMail) form.innerHTML += `<label>Mail para invitación:</label><input id="f-mail" type="email">`;
-                }
-                document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
+                document.getElementById('carrito-vacio').style.display="none"; pago.style.display="block";
+                let hasYT = false, hasMail = false;
+                carrito.forEach((p, i) => {
+                    t += p.precio;
+                    lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`;
+                    if(p.tipo === "full") hasYT = true;
+                    if(p.tipo === "mail") hasMail = true;
+                });
+                if(hasYT) form.innerHTML += `<div class="alerta-roja">Solo cuentas nuevas para YouTube.</div><label>Correo YouTube:</label><input id="f-yt-user"><label>Clave YouTube:</label><input id="f-yt-pass">`;
+                if(hasMail) form.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`;
+                document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
             }
             modal.style.display = "block";
         }
-        function eliminar(index) { carrito.splice(index, 1); document.getElementById('cart-count').innerText = carrito.length; abrirCarrito(); }
+
         function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
         function enviarPedido() {
-            let listado = ""; let subtotal = 0; carrito.forEach((p, i) => { listado += `${i+1}) ${p.nombre}\n`; subtotal += p.precio; });
-            const m = document.getElementById('f-mail')?.value || "No aplica"; const yu = document.getElementById('f-yt-user')?.value || "No aplica"; const yp = document.getElementById('f-yt-pass')?.value || "No aplica";
-            const fTxt = new Date().toLocaleDateString('es-AR') + " - " + new Date().toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${listado}\n💰 Total: $${subtotal.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🕒 *Fecha:* ${fTxt}\n\n📩 *DATOS ACTIVACIÓN:*\n- YouTube: ${yu} / ${yp}\n- Mail Invitación: ${m}\n\n📦 *Envío comprobante a continuación.*`;
+            let items = ""; let total = 0;
+            let hasYT = false, hasMail = false;
+            carrito.forEach((p, i) => { 
+                items += `${i+1}) ${p.nombre}\n`; 
+                total += p.precio; 
+                if(p.tipo === "full") hasYT = true;
+                if(p.tipo === "mail") hasMail = true;
+            });
+            
+            const ytU = document.getElementById('f-yt-user')?.value;
+            const ytP = document.getElementById('f-yt-pass')?.value;
+            const mail = document.getElementById('f-mail')?.value;
+            const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar lo siguiente:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n💳 Pago: Transferencia\n🔑 Alias: ${ALIAS_PAGO}\n🕒 Fecha: ${fecha}\n`;
+
+            if(hasYT || hasMail) {
+                msg += `\n📩 DATOS ACTIVACIÓN:`;
+                if(hasYT) msg += `\n• YouTube: ${ytU} / ${ytP}`;
+                if(hasMail) msg += `\n• Mail Invitación: ${mail}`;
+            }
+
+            msg += `\n\n📦 Envío comprobante a continuación.`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
+
         function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
         function enviarSoporte() {
-            const msg = `🚨 *TICKET DE SOPORTE*\n• Plataforma: ${document.getElementById('sop-plat').value}\n• Usuario: ${document.getElementById('sop-user').value}\n• Pass: ${document.getElementById('sop-pass').value}\n• Problema: ${document.getElementById('sop-prob').value}\n\n*(Adjunto captura de pantalla)*`;
+            const msg = `🚨 SOPORTE\nPlat: ${document.getElementById('sop-plat').value}\nUser: ${document.getElementById('sop-user').value}\nPass: ${document.getElementById('sop-pass').value}\nProb: ${document.getElementById('sop-prob').value}`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
+
         function canjearCodigo() {
-            const codInput = document.getElementById('input-codigo').value.trim().toUpperCase();
+            const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
             const res = document.getElementById('resultado-canje');
-            const cuenta = BOVEDA_CUENTAS[codInput];
-            if (cuenta) {
-                const ahora = new Date(); const v = new Date(); v.setDate(ahora.getDate() + 30);
-                const tC = `🍿 ALN FLUX - ENTREGA\n------------------\n📺 ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n📅 Compra: ${ahora.toLocaleDateString('es-AR')}\n📅 Vence: ${v.toLocaleDateString('es-AR')}\n\n${REGLAS_GENERALES}`;
-                res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;"><h4 style="color:var(--cian); margin:0; text-align:center;">✅ ACCESO DESBLOQUEADO</h4><p style="font-size:0.85rem;">📺 <b>${cuenta.plataforma}</b><br>📧 Correo: ${cuenta.mail}<br>🔑 Clave: ${cuenta.pass}<br>👤 Perfil: ${cuenta.perfil}<br>📌 PIN: ${cuenta.pin}<br>📅 Vence: <span style="color:var(--naranja)">${v.toLocaleDateString('es-AR')}</span></p><hr style="border:0; border-top:1px solid #333;"><p style="font-size:0.6rem; color:#aaa; white-space:pre-line;">${REGLAS_GENERALES}</p><button onclick="navigator.clipboard.writeText(\`${tC.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); font-size:0.75rem;">📋 COPIAR PARA MI CLIENTE</button></div>`;
-            } else { res.innerHTML = `<p style="color:var(--rojo); font-weight:bold; margin-top:15px; font-size:0.8rem;">❌ CÓDIGO INVÁLIDO</p>`; }
+            const c = BOVEDA_CUENTAS[cod];
+            if (c) {
+                const v = new Date(); v.setDate(v.getDate() + 30);
+                const t = `🍿 ENTREGA ALN FLUX\n------------------\n📺 ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS}`;
+                res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
+                    <b>✅ ACCESO OK</b><br>📺 ${c.plataforma}<br>📧 ${c.mail}<br>🔑 ${c.pass}<br>👤 Perfil: ${c.perfil}<br>📌 PIN: ${c.pin}<br>📅 Vence: ${v.toLocaleDateString()}<br><br>
+                    <button onclick="navigator.clipboard.writeText(\`${t.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde)">COPIAR PARA CLIENTE</button>
+                </div>`;
+            } else { res.innerHTML = `<p style="color:var(--rojo)">CÓDIGO INVÁLIDO</p>`; }
         }
         render();
     </script>
