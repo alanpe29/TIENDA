@@ -37,12 +37,9 @@
         .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
         .btn-add:disabled { background: var(--gris-oscuro); cursor: not-allowed; opacity: 0.5; }
         
-        .boveda-section { width: 90%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px; margin: 40px auto 40px; text-align: center; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2); }
+        .boveda-section { width: 90%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px; margin: 40px auto 120px; text-align: center; box-shadow: 0 0 20px rgba(98, 0, 234, 0.2); }
         .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; box-sizing: border-box; margin: 15px 0; outline: none; }
         
-        .admin-section { width: 90%; max-width: 450px; background: #050505; border: 1px solid #111; border-radius: 15px; padding: 20px; margin: 20px auto 120px; text-align: center; opacity: 0.3; transition: 0.5s; }
-        .admin-section:hover { opacity: 1; border-color: var(--cian); }
-
         .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
         
@@ -53,7 +50,7 @@
         
         .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
         label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
         
         .alerta-roja { background: rgba(255, 68, 68, 0.2); color: #ff8888; padding: 10px; border-radius: 8px; font-size: 0.75rem; border: 1px solid var(--rojo); margin-bottom: 15px; text-align: center; line-height: 1.4; }
         .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
@@ -62,9 +59,6 @@
 <body>
 
     <script>
-        // ==========================================
-        // ⚙️ PANEL DE CONTROL
-        // ==========================================
         const TIENDA_ABIERTA = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
@@ -89,17 +83,12 @@
             { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", stock: true }
         ];
 
-        // 🔐 BÓVEDA CON TUS CUENTAS
         const BOVEDA_CUENTAS = {
+            "ALN-DS921": { plataforma: "Disney Plus", mail: "daxmerlo.hu6@semprastore.xyz", pass: "mplay13mar@", perfil: "1", pin: "1111" },
             "ALN-DS448": { plataforma: "Disney Plus", mail: "daxmerlo.hu6@semprastore.xyz", pass: "mplay13mar@", perfil: "2", pin: "2121" }
         };
 
-        const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:
-1. Usar únicamente tu perfil asignado.
-2. No crear ni eliminar perfiles.
-3. Solo ingresar con 1 dispositivo.
-4. No modificar ninguna información de la cuenta.
-5. No agregar numero de celular/ni cambiar.`;
+        const REGLAS_GENERALES = `⚠️ REGLAS IMPORTANTES:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información.\n5. No agregar numero de celular/ni cambiar.`;
     </script>
 
     <div id="status-top" class="status-top"></div>
@@ -107,19 +96,13 @@
     
     <div class="catalogo-container" id="main-grid"></div>
 
+    <!-- BÓVEDA -->
     <section class="boveda-section">
         <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
-        <p style="font-size: 0.8rem; color: #888;">Ingresá tu código para recibir tu cuenta.</p>
+        <p style="font-size: 0.8rem; color: #888;">Ingresá tu código de canje para retirar tu cuenta.</p>
         <input type="text" id="input-codigo" class="boveda-input" placeholder="CÓDIGO AQUÍ">
         <button onclick="canjearCodigo()" class="btn-add">REVELAR ACCESO</button>
         <div id="resultado-canje"></div>
-    </section>
-
-    <section class="admin-section">
-        <h4 style="color: #444; margin: 0; font-size: 0.7rem;">SISTEMA DE AUDITORÍA</h4>
-        <input type="text" id="input-ticket" placeholder="Rastrear Ticket #..." style="background:transparent; border:none; border-bottom:1px solid #222; color:var(--cian); text-align:center; font-size:0.8rem; width:80%;">
-        <button onclick="rastrearTicket()" style="background:transparent; color:#444; border:none; cursor:pointer; font-size:0.6rem;">[BUSCAR]</button>
-        <div id="res-auditoria" style="font-size:0.7rem; margin-top:10px;"></div>
     </section>
 
     <div class="cart-float" id="cart-btn" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
@@ -257,37 +240,20 @@
             const res = document.getElementById('resultado-canje');
             const cuenta = BOVEDA_CUENTAS[codInput];
             if (cuenta) {
-                const sello = Math.floor(Math.random() * 999);
-                const ticket = `TKT-${codInput}-${sello}`;
                 const ahora = new Date();
                 const v = new Date(); v.setDate(ahora.getDate() + 30);
                 const fC = ahora.toLocaleDateString('es-AR');
                 const fV = v.toLocaleDateString('es-AR');
-                const tC = `🍿 ALN FLUX - ENTREGA\n------------------\n📺 ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n🛡️ TICKET GARANTÍA: ${ticket}\n📅 Compra: ${fC}\n📅 Vence: ${fV}\n\n${REGLAS_GENERALES}`;
+                const tC = `🍿 ALN FLUX - ENTREGA\n------------------\n📺 ${cuenta.plataforma}\n📧 Correo: ${cuenta.mail}\n🔑 Clave: ${cuenta.pass}\n👤 Perfil: ${cuenta.perfil}\n📌 PIN: ${cuenta.pin}\n\n📅 Compra: ${fC}\n📅 Vence: ${fV}\n\n${REGLAS_GENERALES}`;
                 res.innerHTML = `<div style="background:rgba(0,229,255,0.1); border:1px solid var(--cian); padding:15px; border-radius:15px; margin-top:20px; text-align:left;">
                     <h4 style="color:var(--cian); margin:0; text-align:center;">✅ ACCESO DESBLOQUEADO</h4>
-                    <p style="font-size:0.85rem;">📺 <b>${cuenta.plataforma}</b><br>📧 Correo: ${cuenta.mail}<br>🔑 Clave: ${cuenta.pass}<br>👤 Perfil: ${cuenta.perfil}<br>📌 PIN: ${cuenta.pin}<br><br>🛡️ <b>TICKET: ${ticket}</b><br>📅 Vence: <span style="color:var(--naranja)">${fV}</span></p>
+                    <p style="font-size:0.85rem;">📺 <b>${cuenta.plataforma}</b><br>📧 Correo: ${cuenta.mail}<br>🔑 Clave: ${cuenta.pass}<br>👤 Perfil: ${cuenta.perfil}<br>📌 PIN: ${cuenta.pin}<br>📅 Vence: <span style="color:var(--naranja)">${fV}</span></p>
                     <hr style="border:0; border-top:1px solid #333;">
                     <p style="font-size:0.6rem; color:#aaa; white-space:pre-line;">${REGLAS_GENERALES}</p>
                     <button onclick="navigator.clipboard.writeText(\`${tC.replace(/\n/g, '\\n')}\`); alert('Copiado');" class="btn-add" style="background:var(--verde); font-size:0.75rem;">📋 COPIAR PARA MI CLIENTE</button>
                 </div>`;
             } else { res.innerHTML = `<p style="color:var(--rojo); font-weight:bold; margin-top:15px; font-size:0.8rem;">❌ CÓDIGO INVÁLIDO</p>`; }
         }
-
-        function rastrearTicket() {
-            const tkt = document.getElementById('input-ticket').value.toUpperCase();
-            const res = document.getElementById('res-auditoria');
-            let encontrado = false;
-            for (let cod in BOVEDA_CUENTAS) {
-                if (tkt.includes(cod)) {
-                    const c = BOVEDA_CUENTAS[cod];
-                    res.innerHTML = `<span style="color:var(--verde)">✓ VENTA VÁLIDA:</span><br>${c.plataforma} | ${c.mail} | Perfil ${c.perfil}`;
-                    encontrado = true; break;
-                }
-            }
-            if(!encontrado) res.innerHTML = `<span style="color:var(--rojo)">✗ TICKET NO ENCONTRADO</span>`;
-        }
-
         render();
     </script>
 </body>
