@@ -3,53 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALN FLUX | Bóveda de Despacho</title>
+    <title>ALN FLUX | Bóveda Privada</title>
     <style>
-        :root { --fondo: #0a0a0a; --tarjeta: #1a1a1a; --cian: #00e5ff; --verde: #25d366; }
-        body { background: var(--fondo); color: white; font-family: sans-serif; padding: 15px; margin: 0; }
+        :root { --fondo: #0a0a0a; --tarjeta: #1a1a1a; --cian: #00e5ff; --verde: #25d366; --rojo: #ff4444; }
+        body { background: var(--fondo); color: white; font-family: 'Segoe UI', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        
+        /* Pantalla de Bloqueo */
+        #bloqueo {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+        }
+        .login-box { background: var(--tarjeta); padding: 30px; border-radius: 20px; border: 1px solid var(--cian); width: 80%; max-width: 350px; }
+        .login-box input { 
+            width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; 
+            border: 1px solid #333; background: #000; color: white; text-align: center; font-size: 1.2rem;
+        }
+        
+        /* Contenido de la Bóveda */
+        .contenido { display: none; padding: 15px; }
         .header { text-align: center; padding: 10px; border-bottom: 2px solid var(--cian); margin-bottom: 20px; }
-        #buscador { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #000; color: white; box-sizing: border-box; font-size: 1.1rem; margin-bottom: 20px; outline: none; }
-        #buscador:focus { border-color: var(--cian); }
-        
+        #buscador { 
+            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; 
+            background: #111; color: white; box-sizing: border-box; font-size: 1rem; margin-bottom: 20px; 
+        }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
-        .card { background: var(--tarjeta); border-radius: 12px; padding: 15px; border-left: 5px solid #555; position: relative; }
+        .card { background: var(--tarjeta); border-radius: 12px; padding: 15px; border-left: 5px solid #555; }
         
-        /* Colores por servicio */
         .disney { border-left-color: #0063e5; }
         .hbo { border-left-color: #9900ff; }
         .amazon { border-left-color: #ff9900; }
         .ps { border-left-color: #003791; }
 
         .info-row { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 5px; }
-        .info-row span { font-size: 0.9rem; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
+        .info-row span { font-size: 0.85rem; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
         
-        .btn-copy { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; text-transform: uppercase; }
-        .btn-copy:active { background: var(--cian); }
+        .btn-copy { background: #333; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        .btn-full { width: 100%; background: var(--verde); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         
-        .btn-full { width: 100%; background: var(--verde); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; font-size: 0.9rem; }
-        .tag-perfil { font-size: 0.7rem; background: var(--cian); color: black; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .error-msg { color: var(--rojo); font-size: 0.8rem; margin-top: 5px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h2 style="margin:0; letter-spacing: 2px;">ALN FLUX <span style="color:var(--cian)">BOVEDA</span></h2>
+<div id="bloqueo">
+    <div class="login-box">
+        <h2 style="color:var(--cian); margin-top:0;">ALN FLUX</h2>
+        <p style="font-size:0.8rem; color:#888;">INGRESA LA CLAVE MAESTRA</p>
+        <input type="password" id="pass-input" placeholder="••••••••">
+        <div id="error" class="error-msg">Clave incorrecta</div>
+        <button onclick="verificar()" class="btn-full" style="background:var(--cian)">ENTRAR</button>
+    </div>
 </div>
 
-<input type="text" id="buscador" placeholder="🔍 Buscar cuenta o juego..." onkeyup="filtrar()">
-
-<div class="grid" id="contenedor">
+<div id="boveda-real" class="contenido">
+    <div class="header">
+        <h2 style="margin:0;">BÓVEDA DE <span style="color:var(--cian)">CUENTAS</span></h2>
     </div>
 
+    <input type="text" id="buscador" placeholder="🔍 Buscar servicio o juego..." onkeyup="filtrar()">
+
+    <div class="grid" id="contenedor">
+        </div>
+    
+    <button onclick="cerrarSesion()" style="background:transparent; color:var(--rojo); border:none; width:100%; margin-top:30px; cursor:pointer; font-size:0.8rem;">CERRAR SESIÓN</button>
+</div>
+
 <script>
+    // --- CONFIGURACIÓN ---
+    const CLAVE_MAESTRA = "ALN123"; // <--- CAMBIÁ ESTO POR TU CLAVE
+
     const CUENTAS = [
         { plataforma: "Disney Plus", clase: "disney", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "Perfil 1", pin: "2002", reglas: "No cambiar datos. 1 solo dispositivo." },
         { plataforma: "HBO Max", clase: "hbo", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "Perfil 4", pin: "1141", reglas: "Respetar perfil asignado." },
         { plataforma: "Amazon Prime", clase: "amazon", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "Perfil 02", pin: "00030", reglas: "Uso personal, no compartir." },
-        { plataforma: "Resident Evil 2 PS4", clase: "ps", mail: "re2ps4_aln@play.com", pass: "Resident88", perfil: "Primaria", pin: "N/A", reglas: "Instalar y loguear como indica el tutorial." },
-        // Agregá más acá siguiendo el formato
+        { plataforma: "Resident Evil 2 PS4", clase: "ps", mail: "re2ps4_aln@play.com", pass: "Resident88", perfil: "Primaria", pin: "N/A", reglas: "Instalar y loguear como indica el tutorial." }
     ];
 
+    // --- SEGURIDAD ---
+    function verificar() {
+        const input = document.getElementById('pass-input').value;
+        if(input === CLAVE_MAESTRA) {
+            sessionStorage.setItem('acceso_aln', 'true');
+            mostrarBoveda();
+        } else {
+            document.getElementById('error').style.display = 'block';
+        }
+    }
+
+    function mostrarBoveda() {
+        document.getElementById('bloqueo').style.display = 'none';
+        document.getElementById('boveda-real').style.display = 'block';
+        cargarCuentas();
+    }
+
+    // Al cargar, verificar si ya entró antes
+    if(sessionStorage.getItem('acceso_aln') === 'true') {
+        mostrarBoveda();
+    }
+
+    // --- FUNCIONES DE BÓVEDA ---
     function cargarCuentas() {
         const cont = document.getElementById('contenedor');
         cont.innerHTML = "";
@@ -58,15 +112,15 @@
                 <div class="card ${c.clase}">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                         <strong style="color:var(--cian)">${c.plataforma}</strong>
-                        <span class="tag-perfil">${c.perfil}</span>
+                        <span style="font-size:0.7rem; color:#888;">${c.perfil}</span>
                     </div>
                     <div class="info-row">
                         <span>${c.mail}</span>
-                        <button class="btn-copy" onclick="copy('${c.mail}')">Mail</button>
+                        <button class="btn-copy" onclick="copyText('${c.mail}')">Mail</button>
                     </div>
                     <div class="info-row">
                         <span>${c.pass}</span>
-                        <button class="btn-copy" onclick="copy('${c.pass}')">Pass</button>
+                        <button class="btn-copy" onclick="copyText('${c.pass}')">Pass</button>
                     </div>
                     <button class="btn-full" onclick="copyFull(${index})">COPIAR MENSAJE COMPLETO ✅</button>
                 </div>
@@ -74,28 +128,29 @@
         });
     }
 
-    function copy(texto) {
+    function copyText(texto) {
         navigator.clipboard.writeText(texto);
-        // Feedback visual rápido
     }
 
     function copyFull(index) {
         const c = CUENTAS[index];
         const textoFull = `🍿 *TU CUENTA ALN FLUX*\n\n📺 *Servicio:* ${c.plataforma}\n📧 *Mail:* ${c.mail}\n🔑 *Pass:* ${c.pass}\n👤 *Perfil:* ${c.perfil}\n🔢 *PIN:* ${c.pin}\n\n⚠️ *Reglas:* ${c.reglas}\n\n¡Gracias por tu compra!`;
         navigator.clipboard.writeText(textoFull);
-        alert("¡Mensaje completo copiado!");
+        alert("¡Copiado para enviar!");
     }
 
     function filtrar() {
-        let filtro = document.getElementById('buscador').value.toLowerCase();
+        let f = document.getElementById('buscador').value.toLowerCase();
         let cards = document.getElementsByClassName('card');
         for (let i = 0; i < cards.length; i++) {
-            let txt = cards[i].innerText.toLowerCase();
-            cards[i].style.display = txt.includes(filtro) ? "" : "none";
+            cards[i].style.display = cards[i].innerText.toLowerCase().includes(f) ? "" : "none";
         }
     }
 
-    cargarCuentas();
+    function cerrarSesion() {
+        sessionStorage.removeItem('acceso_aln');
+        window.location.reload();
+    }
 </script>
 
 </body>
