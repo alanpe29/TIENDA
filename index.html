@@ -3,140 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALN FLUX | Bóveda Privada</title>
+    <title>ALN FLUX | Bóveda de Entrega</title>
     <style>
         :root { --fondo: #0a0a0a; --tarjeta: #1a1a1a; --cian: #00e5ff; --verde: #25d366; --rojo: #ff4444; }
-        body { background: var(--fondo); color: white; font-family: 'Segoe UI', sans-serif; padding: 0; margin: 0; overflow-x: hidden; }
+        body { background: var(--fondo); color: white; font-family: 'Segoe UI', sans-serif; padding: 0; margin: 0; }
         
         /* Pantalla de Bloqueo */
         #bloqueo {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
+            justify-content: center; align-items: center;
         }
-        .login-box { background: var(--tarjeta); padding: 30px; border-radius: 20px; border: 1px solid var(--cian); width: 80%; max-width: 350px; }
+        .login-box { background: var(--tarjeta); padding: 30px; border-radius: 20px; border: 1px solid var(--cian); width: 85%; max-width: 350px; text-align: center; }
         .login-box input { 
             width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; 
-            border: 1px solid #333; background: #000; color: white; text-align: center; font-size: 1.2rem;
+            border: 1px solid #333; background: #000; color: white; text-align: center; font-size: 1.2rem; box-sizing: border-box;
         }
-        
-        /* Contenido de la Bóveda */
+
+        /* Contenido */
         .contenido { display: none; padding: 15px; }
-        .header { text-align: center; padding: 10px; border-bottom: 2px solid var(--cian); margin-bottom: 20px; }
-        #buscador { 
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; 
-            background: #111; color: white; box-sizing: border-box; font-size: 1rem; margin-bottom: 20px; 
-        }
+        .header { text-align: center; padding: 15px; border-bottom: 2px solid var(--cian); margin-bottom: 20px; }
+        #buscador { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-bottom: 20px; outline: none; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
         .card { background: var(--tarjeta); border-radius: 12px; padding: 15px; border-left: 5px solid #555; }
-        
         .disney { border-left-color: #0063e5; }
         .hbo { border-left-color: #9900ff; }
         .amazon { border-left-color: #ff9900; }
         .ps { border-left-color: #003791; }
 
         .info-row { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 5px; }
-        .info-row span { font-size: 0.85rem; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
+        .info-row span { font-size: 0.85rem; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; }
         
-        .btn-copy { background: #333; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
-        .btn-full { width: 100%; background: var(--verde); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
-        
-        .error-msg { color: var(--rojo); font-size: 0.8rem; margin-top: 5px; display: none; }
+        .btn-copy { background: #333; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+        .btn-full { width: 100%; background: var(--verde); color: black; border: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 10px; cursor: pointer; text-transform: uppercase; }
+        .btn-entrar { width: 100%; background: var(--cian); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div id="bloqueo">
     <div class="login-box">
-        <h2 style="color:var(--cian); margin-top:0;">ALN FLUX</h2>
-        <p style="font-size:0.8rem; color:#888;">INGRESA LA CLAVE MAESTRA</p>
-        <input type="password" id="pass-input" placeholder="••••••••">
-        <div id="error" class="error-msg">Clave incorrecta</div>
-        <button onclick="verificar()" class="btn-full" style="background:var(--cian)">ENTRAR</button>
+        <h2 style="color:var(--cian); margin:0;">ALN FLUX</h2>
+        <p style="font-size:0.8rem; color:#888;">BOVEDA DE SEGURIDAD</p>
+        <input type="password" id="pass-input" placeholder="Clave Maestra">
+        <button onclick="verificar()" class="btn-entrar">DESBLOQUEAR</button>
     </div>
 </div>
 
 <div id="boveda-real" class="contenido">
-    <div class="header">
-        <h2 style="margin:0;">BÓVEDA DE <span style="color:var(--cian)">CUENTAS</span></h2>
-    </div>
-
-    <input type="text" id="buscador" placeholder="🔍 Buscar servicio o juego..." onkeyup="filtrar()">
-
-    <div class="grid" id="contenedor">
-        </div>
-    
-    <button onclick="cerrarSesion()" style="background:transparent; color:var(--rojo); border:none; width:100%; margin-top:30px; cursor:pointer; font-size:0.8rem;">CERRAR SESIÓN</button>
+    <div class="header"><h2>MIS <span style="color:var(--cian)">CUENTAS</span></h2></div>
+    <input type="text" id="buscador" placeholder="🔍 Buscar servicio..." onkeyup="filtrar()">
+    <div class="grid" id="contenedor"></div>
+    <button onclick="cerrarSesion()" style="background:transparent; color:var(--rojo); border:none; width:100%; margin-top:40px; cursor:pointer;">CERRAR SESIÓN 🔒</button>
 </div>
 
 <script>
-    // --- CONFIGURACIÓN ---
-    const CLAVE_MAESTRA = "ALN123"; // <--- CAMBIÁ ESTO POR TU CLAVE
+    const CLAVE_MAESTRA = "ALN123"; // <-- CAMBIÁ TU CLAVE ACÁ
 
     const CUENTAS = [
-        { plataforma: "Disney Plus", clase: "disney", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "Perfil 1", pin: "2002", reglas: "No cambiar datos. 1 solo dispositivo." },
-        { plataforma: "HBO Max", clase: "hbo", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "Perfil 4", pin: "1141", reglas: "Respetar perfil asignado." },
-        { plataforma: "Amazon Prime", clase: "amazon", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "Perfil 02", pin: "00030", reglas: "Uso personal, no compartir." },
-        { plataforma: "Resident Evil 2 PS4", clase: "ps", mail: "re2ps4_aln@play.com", pass: "Resident88", perfil: "Primaria", pin: "N/A", reglas: "Instalar y loguear como indica el tutorial." }
+        { plataforma: "Disney Plus", clase: "disney", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "1", pin: "2002" },
+        { plataforma: "HBO Max", clase: "hbo", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141" },
+        { plataforma: "Amazon Prime", clase: "amazon", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030" },
+        { plataforma: "Resident Evil 4 PS4", clase: "ps", mail: "re4_aln@play.com", pass: "LeoLeon2026", perfil: "Primaria", pin: "N/A" }
     ];
 
-    // --- SEGURIDAD ---
     function verificar() {
-        const input = document.getElementById('pass-input').value;
-        if(input === CLAVE_MAESTRA) {
-            sessionStorage.setItem('acceso_aln', 'true');
-            mostrarBoveda();
-        } else {
-            document.getElementById('error').style.display = 'block';
-        }
+        if(document.getElementById('pass-input').value === CLAVE_MAESTRA) {
+            sessionStorage.setItem('aln_auth', 'ok');
+            mostrar();
+        } else { alert("Clave incorrecta"); }
     }
 
-    function mostrarBoveda() {
+    function mostrar() {
         document.getElementById('bloqueo').style.display = 'none';
         document.getElementById('boveda-real').style.display = 'block';
-        cargarCuentas();
+        cargar();
     }
 
-    // Al cargar, verificar si ya entró antes
-    if(sessionStorage.getItem('acceso_aln') === 'true') {
-        mostrarBoveda();
-    }
+    if(sessionStorage.getItem('aln_auth') === 'ok') mostrar();
 
-    // --- FUNCIONES DE BÓVEDA ---
-    function cargarCuentas() {
+    function cargar() {
         const cont = document.getElementById('contenedor');
         cont.innerHTML = "";
         CUENTAS.forEach((c, index) => {
             cont.innerHTML += `
                 <div class="card ${c.clase}">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <strong style="color:var(--cian)">${c.plataforma}</strong>
-                        <span style="font-size:0.7rem; color:#888;">${c.perfil}</span>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <b style="color:var(--cian)">${c.plataforma}</b>
+                        <span style="font-size:0.7rem; color:#888;">Perfil: ${c.perfil}</span>
                     </div>
-                    <div class="info-row">
-                        <span>${c.mail}</span>
-                        <button class="btn-copy" onclick="copyText('${c.mail}')">Mail</button>
-                    </div>
-                    <div class="info-row">
-                        <span>${c.pass}</span>
-                        <button class="btn-copy" onclick="copyText('${c.pass}')">Pass</button>
-                    </div>
+                    <div class="info-row"><span>${c.mail}</span><button class="btn-copy" onclick="copy('${c.mail}')">Mail</button></div>
+                    <div class="info-row"><span>${c.pass}</span><button class="btn-copy" onclick="copy('${c.pass}')">Pass</button></div>
                     <button class="btn-full" onclick="copyFull(${index})">COPIAR MENSAJE COMPLETO ✅</button>
-                </div>
-            `;
+                </div>`;
         });
     }
 
-    function copyText(texto) {
-        navigator.clipboard.writeText(texto);
-    }
+    function copy(t) { navigator.clipboard.writeText(t); }
 
-    function copyFull(index) {
-        const c = CUENTAS[index];
-        const textoFull = `🍿 *TU CUENTA ALN FLUX*\n\n📺 *Servicio:* ${c.plataforma}\n📧 *Mail:* ${c.mail}\n🔑 *Pass:* ${c.pass}\n👤 *Perfil:* ${c.perfil}\n🔢 *PIN:* ${c.pin}\n\n⚠️ *Reglas:* ${c.reglas}\n\n¡Gracias por tu compra!`;
-        navigator.clipboard.writeText(textoFull);
-        alert("¡Copiado para enviar!");
+    function copyFull(i) {
+        const c = CUENTAS[i];
+        const reglas = `⚠️ *REGLAS DE ORO (Sin excepción):*\n1️⃣ Prohibido cambiar el Correo o la Contraseña.\n2️⃣ Prohibido cambiar el Nombre o PIN de los perfiles.\n3️⃣ Usar ÚNICAMENTE el perfil asignado.\n4️⃣ Conectar solo 1 DISPOSITIVO a la vez.\n❌ *El incumplimiento de cualquier regla anula la garantía.*`;
+        
+        const msg = `🍿 *TU CUENTA ALN FLUX*\n\n📺 *Servicio:* ${c.plataforma}\n📧 *Mail:* ${c.mail}\n🔑 *Pass:* ${c.pass}\n👤 *Perfil:* ${c.perfil}\n🔢 *PIN:* ${c.pin}\n\n${reglas}\n\n¡Gracias por tu compra!`;
+        
+        navigator.clipboard.writeText(msg);
+        alert("Mensaje con reglas copiado!");
     }
 
     function filtrar() {
@@ -147,10 +120,7 @@
         }
     }
 
-    function cerrarSesion() {
-        sessionStorage.removeItem('acceso_aln');
-        window.location.reload();
-    }
+    function cerrarSesion() { sessionStorage.removeItem('aln_auth'); window.location.reload(); }
 </script>
 
 </body>
