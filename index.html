@@ -22,48 +22,36 @@
         @keyframes glitchNeon { 0%, 100% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); } 92% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); opacity: 1; } 93% { text-shadow: 0 0 5px var(--morado), 0 0 10px var(--morado); opacity: 0.8; } 95% { text-shadow: none; opacity: 0.7; } }
         
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
-        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 150px; position: relative; }
+        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 180px; position: relative; }
         .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
-        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; display: block; }
+        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; display: block; }
         
+        .btn-info { background: transparent; color: var(--cian); border: none; font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-bottom: 15px; display: block; width: 100%; }
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; margin-bottom: 8px; }
-        .btn-add:hover:not(:disabled) { background: var(--cian); color: #000; }
-        .btn-add:disabled { background: #222; color: #555; cursor: not-allowed; }
-
-        .btn-demo { background: transparent; color: var(--cian); border: 1px solid var(--cian); padding: 8px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.7rem; text-transform: uppercase; transition: 0.3s; }
-        .btn-demo:hover:not(:disabled) { background: var(--cian); color: #000; }
+        .btn-demo { background: transparent; color: var(--cian); border: 1px solid var(--cian); padding: 8px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.7rem; text-transform: uppercase; }
         .btn-demo:disabled { border-color: #333; color: #555; cursor: not-allowed; }
-        
+
+        /* Bóveda 3D */
         .boveda-section { width: 95%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px 20px; margin: 40px auto 120px; text-align: center; }
-        .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; box-sizing: border-box; margin: 15px 0; outline: none; }
+        .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; margin: 15px 0; outline: none; }
         
-        .access-card-container { width: 100%; height: 420px; perspective: 1000px; margin-top: 20px; display: none; }
+        .access-card-container { width: 100%; height: 440px; perspective: 1000px; margin-top: 20px; display: none; }
         .access-card-inner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; }
         .is-flipped { transform: rotateY(180deg); }
         .card-face { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
         .card-face-front { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); justify-content: center; align-items: center; padding: 20px; }
-        .service-logo { font-size: 3rem; margin-bottom: 15px; color: white; text-shadow: 0 0 10px currentColor; }
-        .vence-txt { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
         .card-face-back { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); transform: rotateY(180deg); justify-content: space-between; padding: 20px; }
-        .data-section { text-align: left; font-size: 0.85rem; line-height: 1.6; }
-        .neon-label { color: var(--cian); text-shadow: 0 0 5px currentColor; font-weight: bold; }
-        .rules-section { border-top: 1px dashed var(--cian); padding-top: 15px; margin-top: 10px; text-align: left; font-size: 0.6rem; color: #aaa; white-space: pre-line; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 10px; }
-        .flip-btn { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; margin-top: 15px; }
-        .copy-btn { background: var(--verde); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 0.8rem; margin-top: 10px; font-weight: bold; text-transform: uppercase; width: 100%; }
-        .spinner { border: 4px solid #333; border-top: 4px solid var(--cian); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; display: none; margin: 15px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .rules-section { border-top: 1px dashed var(--cian); padding-top: 10px; margin-top: 10px; text-align: left; font-size: 0.6rem; color: #aaa; white-space: pre-line; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; }
 
-        .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
-        
+        /* Modales */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
         .modal-content { background: #0a0a0a; margin: 8% auto; padding: 25px; border: 1px solid var(--morado); width: 90%; max-width: 450px; border-radius: 25px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #222; }
-        .cart-item button { background: var(--rojo); border: none; color: white; padding: 5px 10px; border-radius: 5px; }
+        .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); }
+        .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
+        
         .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
-        label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
         input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
-        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; font-size: 1.1rem; border:none; cursor:pointer; }
+        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; border:none; cursor:pointer; }
     </style>
 </head>
 <body>
@@ -77,42 +65,27 @@
         const NOMBRE_PAGO = "Alan Nicolas Perez";
 
         const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail" },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo" },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo" },
-            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo" },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo" },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo" },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo" },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo" },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo" },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full" },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full" },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail" },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail" },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo" },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true }
+            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, desc: "Acceso premium combinado para disfrutar lo mejor del streaming y diseño profesional." },
+            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, desc: "Contenido original de Amazon (The Boys, Rings of Power), películas de estreno, series exclusivas y clásicos del cine." },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic. Películas de superhéroes y clásicos animados." },
+            { id: 4,  nombre: "Max (HBO)", precio: 2000, desc: "Calidad cinematográfica: Producciones de Warner Bros, DC Universe, Cartoon Network y series originales de HBO." },
+            { id: 5,  nombre: "Paramount Plus", precio: 2000, desc: "Lo mejor de Nickelodeon, MTV, Showtime, Comedy Central y estrenos exclusivos de Paramount Pictures." },
+            { id: 6,  nombre: "VIX Premium", precio: 2000, desc: "Todo el contenido latino, novelas y fútbol mexicano en un solo lugar." },
+            { id: 7,  nombre: "Crunchyroll", precio: 2500, desc: "La mayor biblioteca de Anime del mundo. Estrenos directos de Japón, simulcasts y series clásicas." },
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, desc: "Música para expertos: Sonido en calidad Hi-Fi / Master y videos musicales en HD." },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, desc: "Televisión de alta calidad: Cientos de canales en vivo, Pack Fútbol, noticias, cine y series actualizadas." },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, desc: "YouTube sin anuncios, reproducción en segundo plano y acceso completo a YouTube Music Premium." },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, desc: "Beneficio Premium para hasta 5 miembros de la familia con cuentas separadas." },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, desc: "Diseño profesional: Fotos premium, plantillas exclusivas y herramientas mágicas de edición." },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, desc: "Diseño profesional por 3 meses con todas las funciones premium activas." },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, desc: "Pack ideal para revendedores: 10 cuentas de Canva Pro a precio preferencial." },
+            { id: 15, nombre: "TV Digital N", precio: 7999, demo: true, desc: "TV Premium en vivo: Todos los canales en alta calidad, Pack Fútbol, noticias y cine." },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, demo: true, desc: "IPTV Premium: Estabilidad garantizada para ver el Pack Fútbol sin cortes y miles de canales mundiales." }
         ];
 
         const BOVEDA_CUENTAS = {
-            // AMAZON PRIME VIDEO
             "ALN-AP722": { plataforma: "Amazon Prime", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP301": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP452": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP119": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP884": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP625": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-
-            // HBO MAX
             "ALN-HB947": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB102": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB553": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB291": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB774": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB308": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-
-            // DISNEY PLUS
             "ALN-DP991": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "1", pin: "2002", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP402": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "2", pin: "9910", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP115": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "3", pin: "4020", color: "#00e5ff", emoji: "🔵" },
@@ -120,18 +93,25 @@
             "ALN-DP662": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "5", pin: "0200", color: "#00e5ff", emoji: "🔵" }
         };
 
-        const REGLAS_TEXTO = `Gracias por su compra. 🚀\n\n⚠ Reglas de uso:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información de la cuenta.\n5. No agregar numero de celular/ni cambiar.\n\n☠️ En caso de no cumplir las reglas se le dará de baja el servicio y no habrá devolución.`;
+        const REGLAS_TEXTO = "⚠ Reglas de uso:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información de la cuenta.\n5. No agregar numero de celular/ni cambiar.\n\n☠️ En caso de no cumplir las reglas se le dará de baja el servicio y no habrá devolución.";
     </script>
 
     <div id="status-top" class="status-top"></div>
     <header><h1>ALN <span>FLUX</span> STORE</h1></header>
     <div class="catalogo-container" id="main-grid"></div>
 
+    <div id="modalInfo" class="modal">
+        <div class="modal-content" style="border-color: var(--cian);">
+            <h3 id="info-titulo" style="color:var(--cian); text-align:center; margin-top:0;"></h3>
+            <p id="info-cuerpo" style="font-size: 0.95rem; line-height: 1.5; text-align: center; color: #ddd;"></p>
+            <button onclick="cerrarTodo()" class="btn-finalizar" style="background: var(--cian); color: #000;">ENTENDIDO</button>
+        </div>
+    </div>
+
     <div id="modalDemo" class="modal">
         <div class="modal-content" style="border-color: var(--cian);">
             <h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3>
-            <p style="font-size: 0.9rem; line-height: 1.4; text-align: center;">Te entregamos acceso total para que pruebes la calidad del servicio.</p>
-            <div style="background: rgba(0, 229, 255, 0.1); padding: 15px; border-radius: 15px; border: 1px solid var(--cian); margin: 15px 0;">
+            <div style="background: rgba(0, 229, 255, 0.1); padding: 15px; border-radius: 15px; border: 1px solid var(--cian); margin: 15px 0; font-size: 0.85rem;">
                 ⏱️ <b>DURACIÓN:</b> 1 Hora exacta.<br><br>
                 🚫 <b>AVISO:</b> Prohibido solicitar demos en horarios de partidos populares o importantes (Champions, Libertadores, Clásicos, etc).
             </div>
@@ -141,26 +121,26 @@
     </div>
 
     <section class="boveda-section">
-        <h3 style="color: var(--morado); margin-top: 0;"><span style="color: var(--oro);">🔒</span> BÓVEDA DE CLIENTES</h3>
+        <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
         <input type="text" id="input-codigo" class="boveda-input" placeholder="INGRESA CÓDIGO">
-        <button onclick="canjearCodigo()" class="btn-add" style="background:var(--morado) !important; color:white !important; margin-bottom: 0;">REVELAR ACCESO</button>
-        <div id="spinner-loader" class="spinner"></div>
+        <button onclick="canjearCodigo()" class="btn-add" style="margin-bottom:0;">REVELAR ACCESO</button>
+        <div id="spinner-loader" style="display:none; margin:15px auto;" class="glitchNeon">Cargando acceso...</div>
         <div id="access-card-container" class="access-card-container">
             <div id="access-card-inner" class="access-card-inner">
                 <div id="flip-front" class="card-face card-face-front">
-                    <div id="flip-logo" class="service-logo"></div>
-                    <div id="flip-vence" class="vence-txt"></div>
+                    <div id="flip-logo" style="font-size:3rem;"></div>
+                    <div id="flip-vence" style="font-size:0.8rem; color:#aaa; margin-top:10px;"></div>
                     <button class="flip-btn" onclick="document.getElementById('access-card-inner').classList.add('is-flipped')">Ver Datos 🔄</button>
                 </div>
                 <div id="flip-back" class="card-face card-face-back">
-                    <div class="data-section">
-                        <span class="neon-label">📺</span> <span id="txt-plat"></span><br>
-                        <span class="neon-label">📧 Correo:</span> <span id="txt-mail"></span><br>
-                        <span class="neon-label">🔑 Contraseña:</span> <span id="txt-pass"></span><br>
-                        <span class="neon-label">👤 Perfil:</span> <span id="txt-perfil"></span><br>
-                        <span class="neon-label">📌 PIN:</span> <span id="txt-pin"></span>
+                    <div style="text-align:left; font-size:0.85rem; line-height:1.5;">
+                        <span style="color:var(--cian)">📺</span> <span id="txt-plat"></span><br>
+                        <span style="color:var(--cian)">📧 Correo:</span> <span id="txt-mail"></span><br>
+                        <span style="color:var(--cian)">🔑 Clave:</span> <span id="txt-pass"></span><br>
+                        <span style="color:var(--cian)">👤 Perfil:</span> <span id="txt-perfil"></span><br>
+                        <span style="color:var(--cian)">📌 PIN:</span> <span id="txt-pin"></span>
                     </div>
-                    <div class="rules-section"><b>⚠ REGLAS OBLIGATORIAS:</b>${REGLAS_TEXTO.split('\n\n')[1]}</div>
+                    <div id="txt-reglas-boveda" class="rules-section"></div>
                     <button id="btn-copy-card" class="copy-btn">COPIAR TODO ✅</button>
                 </div>
             </div>
@@ -178,12 +158,11 @@
             <div id="seccion-pago" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
                 <div style="background:#000; padding:15px; border-radius:15px; text-align:center; border:1px dashed var(--cian); margin-bottom:15px;">
-                    <span style="font-size:0.75rem; color:var(--cian); font-weight:bold;">MERCADO PAGO</span><br>
-                    <b style="font-size:1.4rem; color:white;" id="alias-txt"></b><br>
-                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Alias copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); border-radius:5px; padding:3px 8px; margin-top:5px; cursor:pointer; font-size:0.65rem;">COPIAR ALIAS</button>
-                    <div style="margin-top:10px; border-top:1px solid #222; padding-top:10px;">
-                        <b style="font-size:0.9rem; color:white;" id="nombre-txt"></b><br>
-                        <button onclick="navigator.clipboard.writeText(NOMBRE_PAGO); alert('Nombre copiado');" style="background:transparent; color:#888; border:1px solid #444; border-radius:5px; padding:3px 8px; margin-top:5px; cursor:pointer; font-size:0.6rem;">COPIAR NOMBRE</button>
+                    <span style="font-size:0.75rem; color:var(--cian);">MERCADO PAGO</span><br>
+                    <b style="font-size:1.3rem;" id="alias-txt"></b><br>
+                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); padding:3px; font-size:0.6rem; cursor:pointer;">COPIAR ALIAS</button>
+                    <div style="margin-top:8px; border-top:1px solid #222; padding-top:8px;">
+                        <b style="font-size:0.9rem;" id="nombre-txt"></b>
                     </div>
                 </div>
                 <div id="form-datos" class="form-datos"></div>
@@ -199,9 +178,9 @@
             <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
             <div class="alerta-roja">🚩 REQUISITO: Enviar FOTO o VIDEO del error.</div>
             <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
-                <label>Correo de la cuenta:</label><input type="text" id="sop-user">
-                <label>Contraseña:</label><input type="text" id="sop-pass">
+                <label>Plataforma:</label><input type="text" id="sop-plat">
+                <label>Correo:</label><input type="text" id="sop-user">
+                <label>Clave:</label><input type="text" id="sop-pass">
                 <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
             </div>
             <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR TICKET</button>
@@ -221,70 +200,61 @@
             const grid = document.getElementById('main-grid');
             grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
-                let html = `<div class="card">
+                let h = `<div class="card">
                     <h2>${p.nombre}</h2>
                     <span class="precio-tag">$${p.precio.toLocaleString()}</span>
-                    <button class="btn-add" ${!TIENDA_ABIERTA ? 'disabled' : ''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA ? 'Añadir' : 'Cerrado'}</button>`;
-                if(p.demo) {
-                    html += `<button class="btn-demo" ${!DEMOS_HABILITADAS ? 'disabled' : ''} onclick="abrirDemo('${p.nombre}')">
-                        ${DEMOS_HABILITADAS ? '🎁 Probar Demo' : 'Demos Pausadas'}
-                    </button>`;
-                }
-                html += `</div>`;
-                grid.innerHTML += html;
+                    <button class="btn-info" onclick="abrirInfo(${p.id})">[ Saber más ]</button>
+                    <button class="btn-add" ${!TIENDA_ABIERTA?'disabled':''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA?'Añadir':'Cerrado'}</button>`;
+                if(p.demo) h += `<button class="btn-demo" ${!DEMOS_HABILITADAS?'disabled':''} onclick="abrirDemo('${p.nombre}')">${DEMOS_HABILITADAS?'🎁 Probar Demo':'Demos Pausadas'}</button>`;
+                h += `</div>`; grid.innerHTML += h;
             });
         }
 
-        function abrirDemo(nombre) {
-            document.getElementById('modalDemo').style.display = "block";
-            document.getElementById('btn-whatsapp-demo').onclick = function() {
-                const msg = `Hola ALN FLUX STORE! 👋 Solicito una *DEMO GRATIS* para probar el servicio de *${nombre}*. Entiendo que dura 1 hora. ¿Me pasas los datos?`;
-                window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
-            };
+        function abrirInfo(id) {
+            const p = PRODUCTOS.find(x => x.id === id);
+            document.getElementById('info-titulo').innerText = p.nombre;
+            document.getElementById('info-cuerpo').innerText = p.desc;
+            document.getElementById('modalInfo').style.display = "block";
         }
 
         function canjearCodigo() {
             const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
             const res = document.getElementById('resultado-canje');
-            const cContainer = document.getElementById('access-card-container');
-            const loader = document.getElementById('spinner-loader');
+            const cCont = document.getElementById('access-card-container');
             const cInner = document.getElementById('access-card-inner');
-            cContainer.style.display = "none";
-            cInner.classList.remove('is-flipped');
-            res.innerHTML = "";
-            if (!cod) return;
-            loader.style.display = "block";
-            setTimeout(() => {
-                loader.style.display = "none";
-                const c = BOVEDA_CUENTAS[cod];
-                if (c) {
-                    const v = new Date(); v.setDate(v.getDate() + 30);
-                    const vencTxt = v.toLocaleDateString();
-                    document.getElementById('txt-plat').innerText = c.plataforma;
-                    document.getElementById('txt-mail').innerText = c.mail;
-                    document.getElementById('txt-pass').innerText = c.pass;
-                    document.getElementById('txt-perfil').innerText = c.perfil;
-                    document.getElementById('txt-pin').innerText = c.pin;
-                    document.getElementById('flip-logo').innerText = c.emoji;
-                    document.getElementById('flip-vence').innerText = `Vence: ${vencTxt}`;
-                    const neonColor = c.color || "#00e5ff";
-                    document.getElementById('flip-front').style.borderColor = neonColor;
-                    document.getElementById('flip-front').style.boxShadow = `0 0 20px ${neonColor}80`;
-                    document.getElementById('flip-back').style.borderColor = neonColor;
-                    document.getElementById('flip-back').style.boxShadow = `0 0 20px ${neonColor}80`;
-                    document.getElementById('flip-logo').style.color = neonColor;
-                    const textCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plataforma: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Contraseña: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${vencTxt}\n\n${REGLAS_TEXTO}`;
-                    document.getElementById('btn-copy-card').onclick = () => { navigator.clipboard.writeText(textCopia).then(() => alert('Copiado')); };
-                    cContainer.style.display = "block";
-                } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:15px; font-weight:bold;">❌ CÓDIGO INVÁLIDO</p>`; }
-            }, 2000);
+            cCont.style.display = "none"; cInner.classList.remove('is-flipped'); res.innerHTML = "";
+            if(!cod) return;
+            const c = BOVEDA_CUENTAS[cod];
+            if(c) {
+                const v = new Date(); v.setDate(v.getDate() + 30);
+                document.getElementById('txt-plat').innerText = c.plataforma;
+                document.getElementById('txt-mail').innerText = c.mail;
+                document.getElementById('txt-pass').innerText = c.pass;
+                document.getElementById('txt-perfil').innerText = c.perfil;
+                document.getElementById('txt-pin').innerText = c.pin;
+                document.getElementById('flip-logo').innerText = c.emoji;
+                document.getElementById('flip-vence').innerText = `Vence: ${v.toLocaleDateString()}`;
+                document.getElementById('txt-reglas-boveda').innerText = "⚠ REGLAS DE USO:\n" + REGLAS_TEXTO.split('\n\n')[0].replace("⚠ Reglas de uso:\n", "");
+                
+                const textoCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS_TEXTO}`;
+                document.getElementById('btn-copy-card').onclick = () => { navigator.clipboard.writeText(textoCopia); alert('Copiado'); };
+                
+                const nCol = c.color || "#00e5ff";
+                document.getElementById('flip-front').style.borderColor = nCol;
+                document.getElementById('flip-front').style.boxShadow = `0 0 15px ${nCol}80`;
+                document.getElementById('flip-back').style.borderColor = nCol;
+                document.getElementById('flip-back').style.boxShadow = `0 0 15px ${nCol}80`;
+                
+                cCont.style.display = "block";
+            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO</p>`; }
         }
 
+        function abrirDemo(n) { document.getElementById('modalDemo').style.display = "block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito una *DEMO GRATIS* de *'+n+'*. Entiendo que dura 1 hora.')}`); }
         function agregarAlCarrito(id) { if(!TIENDA_ABIERTA) return; carrito.push(PRODUCTOS.find(x => x.id === id)); document.getElementById('cart-count').innerText = carrito.length; }
-        function abrirCarrito() { if(!TIENDA_ABIERTA) return; const modal = document.getElementById('modalCarrito'); const lista = document.getElementById('lista-carrito'); const pago = document.getElementById('seccion-pago'); const form = document.getElementById('form-datos'); lista.innerHTML = ""; form.innerHTML = ""; let t = 0; if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; pago.style.display="none"; } else { document.getElementById('carrito-vacio').style.display="none"; pago.style.display="block"; let hasYT = false, hasMail = false; carrito.forEach((p, i) => { t += p.precio; lista.innerHTML += `<div class="cart-item"><span>${p.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(p.tipo === "full") hasYT = true; if(p.tipo === "mail") hasMail = true; }); if(hasYT) form.innerHTML += `<label>Correo YouTube:</label><input id="f-yt-user"><label>Clave YouTube:</label><input id="f-yt-pass">`; if(hasMail) form.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`; document.getElementById('total-precio').innerText = "$" + t.toLocaleString(); } modal.style.display = "block"; }
-        function enviarPedido() { let items = ""; let total = 0; let hasYT = false, hasMail = false; carrito.forEach((p, i) => { items += `${i+1}) ${p.nombre}\n`; total += p.precio; if(p.tipo === "full") hasYT = true; if(p.tipo === "mail") hasMail = true; }); const ytU = document.getElementById('f-yt-user')?.value; const ytP = document.getElementById('f-yt-pass')?.value; const mail = document.getElementById('f-mail')?.value; const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}); let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${items}\n💰 Total: $${total.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`; if(hasYT || hasMail) { msg += `\n📩 DATOS ACTIVACIÓN:`; if(hasYT) msg += `\n• YT: ${ytU} / ${ytP}`; if(hasMail) msg += `\n• Mail: ${mail}`; } msg += `\n\n📦 Envío comprobante.`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
+        function abrirCarrito() { if(!TIENDA_ABIERTA) return; const m = document.getElementById('modalCarrito'); const l = document.getElementById('lista-carrito'); const p = document.getElementById('seccion-pago'); const f = document.getElementById('form-datos'); l.innerHTML = ""; f.innerHTML = ""; let t = 0; if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; p.style.display="none"; } else { document.getElementById('carrito-vacio').style.display="none"; p.style.display="block"; let hYT = false; carrito.forEach((x, i) => { t += x.precio; l.innerHTML += `<div class="cart-item"><span>${x.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(x.nombre.includes("YouTube")) hYT = true; }); if(hYT) f.innerHTML += `<label>Mail/Clave YouTube:</label><input id="f-yt">`; document.getElementById('total-precio').innerText = "$" + t.toLocaleString(); } m.style.display = "block"; }
+        function enviarPedido() { let it = ""; let t = 0; carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; }); const yt = document.getElementById('f-yt')?.value || ''; const msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n${yt?'📩 Datos: '+yt+'\n':''}📦 Envío comprobante.`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
         function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
-        function enviarSoporte() { const msg = `🚨 *TICKET DE SOPORTE*\n• Plat: ${document.getElementById('sop-plat').value}\n• User: ${document.getElementById('sop-user').value}\n• Pass: ${document.getElementById('sop-pass').value}\n• Prob: ${document.getElementById('sop-prob').value}`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
+        function enviarSoporte() { const msg = `🚨 *SOPORTE*\n• Plat: ${document.getElementById('sop-plat').value}\n• User: ${document.getElementById('sop-user').value}\n• Pass: ${document.getElementById('sop-pass').value}\n• Prob: ${document.getElementById('sop-prob').value}`; window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`); }
         function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         render();
     </script>
