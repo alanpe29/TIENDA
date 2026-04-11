@@ -48,6 +48,7 @@
         .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
         
         .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
+        label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
         input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
         .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; border:none; cursor:pointer; }
     </style>
@@ -64,41 +65,36 @@
 
         const PRODUCTOS = [
             { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Acceso premium combinado para disfrutar lo mejor del streaming y diseño profesional." },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Contenido original de Amazon (The Boys, Rings of Power), películas de estreno y series exclusivas." },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic. Clásicos y superhéroes." },
-            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Calidad cinematográfica: Warner Bros, DC Universe, Cartoon Network y series originales de HBO." },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Lo mejor de Nickelodeon, MTV, Showtime, Comedy Central y estrenos de Paramount Pictures." },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Todo el contenido latino, novelas y fútbol mexicano en un solo lugar." },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", desc: "La mayor biblioteca de Anime del mundo. Estrenos de Japón y series clásicas." },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo", desc: "Música para expertos: Sonido en calidad Hi-Fi / Master y videos musicales en HD." },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "Televisión de alta calidad: Canales en vivo, Pack Fútbol, noticias, cine y series." },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "YouTube sin anuncios, reproducción en segundo plano y YouTube Music Premium incluido." },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "Beneficio Premium para hasta 5 miembros de la familia con cuentas separadas." },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional: Fotos premium, plantillas exclusivas y herramientas mágicas." },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Diseño profesional por 3 meses con todas las funciones premium activas." },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack ideal para revendedores: 10 cuentas de Canva Pro a precio preferencial." },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "TV Premium en vivo: Canales en alta calidad, Pack Fútbol, noticias y cine actualizado." },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true, desc: "IPTV Premium: Estabilidad para ver el Pack Fútbol sin cortes y miles de canales mundiales." }
+            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Contenido original de Amazon, películas de estreno y series exclusivas." },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic." },
+            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Warner Bros, DC Universe, Cartoon Network y series originales de HBO." },
+            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Lo mejor de Nickelodeon, MTV, Showtime y Comedy Central." },
+            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Todo el contenido latino, novelas y fútbol mexicano." },
+            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", desc: "La mayor biblioteca de Anime del mundo. Estrenos de Japón." },
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo", desc: "Música para expertos: Sonido en calidad Master y videos en HD." },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "Cientos de canales en vivo, Pack Fútbol completo, noticias y cine." },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "Sin anuncios, reproducción en segundo plano y YouTube Music Premium." },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "Beneficio Premium para hasta 5 miembros de la familia." },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional: Fotos premium y herramientas mágicas." },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Diseño profesional por 3 meses con funciones premium." },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack ideal para revendedores: 10 cuentas de Canva Pro." },
+            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "Canales en alta calidad, Pack Fútbol, noticias y cine actualizado." },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true, desc: "IPTV Premium: Estabilidad para ver el Pack Fútbol sin cortes." }
         ];
 
         const BOVEDA_CUENTAS = {
-            // AMAZON PRIME VIDEO
             "ALN-AP722": { plataforma: "Amazon Prime", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030", color: "#ff9800", emoji: "🟠" },
             "ALN-AP301": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP452": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP119": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP884": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP625": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-
-            // HBO MAX
             "ALN-HB947": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141", color: "#6200ea", emoji: "🟣" },
             "ALN-HB102": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB553": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB291": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB774": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB308": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-
-            // DISNEY PLUS
             "ALN-DP991": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "1", pin: "2002", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP402": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "2", pin: "9910", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP115": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "3", pin: "4020", color: "#00e5ff", emoji: "🔵" },
@@ -114,7 +110,7 @@
     <div class="catalogo-container" id="main-grid"></div>
 
     <div id="modalInfo" class="modal"><div class="modal-content"><h3 id="info-titulo" style="color:var(--cian); text-align:center;"></h3><p id="info-cuerpo" style="text-align:center;"></p><button onclick="cerrarTodo()" class="btn-finalizar" style="background:var(--cian); color:#000;">ENTENDIDO</button></div></div>
-    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem;">⏱️ <b>DURACIÓN:</b> 1 Hora.<br>🚫 <b>AVISO:</b> Prohibido pedir demos en horarios de partidos importantes (Champions, Libertadores, Clásicos, etc).</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR DEMO</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
+    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem;">⏱️ <b>DURACIÓN:</b> 1 Hora.<br>🚫 <b>AVISO:</b> Prohibido pedir demos en horarios de partidos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR DEMO</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
 
     <section class="boveda-section">
         <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
@@ -155,7 +151,7 @@
                     <div style="margin-top:8px; border-top:1px solid #222; padding-top:8px;"><b style="font-size:0.9rem;" id="nombre-txt"></b></div>
                 </div>
                 <div id="form-datos" class="form-datos"></div>
-                <button onclick="enviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
+                <button onclick="validarYEnviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
             </div>
             <p id="carrito-vacio" style="text-align:center; color:#555;">Carrito vacío</p>
             <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
@@ -167,7 +163,7 @@
             <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
             <div class="alerta-roja">🚩 REQUISITO: Enviar FOTO o VIDEO del error.</div>
             <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
+                <label>Plataforma:</label><input type="text" id="sop-plat">
                 <label>Correo:</label><input type="text" id="sop-user">
                 <label>Clave:</label><input type="text" id="sop-pass">
                 <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
@@ -214,21 +210,17 @@
                 document.getElementById('txt-pin').innerText = c.pin;
                 document.getElementById('flip-logo').innerText = c.emoji;
                 document.getElementById('flip-vence').innerText = `Vence: ${v.toLocaleDateString()}`;
-                
-                // Arreglo del error visual de las reglas
                 const reglasLimpias = REGLAS_TEXTO.split('\n\n')[0].replace("⚠ Reglas de uso:\n", "");
                 document.getElementById('txt-reglas-boveda').innerText = "⚠ REGLAS DE USO:\n" + reglasLimpias;
-                
                 const textoCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS_TEXTO}`;
                 document.getElementById('btn-copy-card').onclick = () => { navigator.clipboard.writeText(textoCopia); alert('Copiado'); };
-                
                 const nCol = c.color || "#00e5ff";
                 document.getElementById('flip-front').style.borderColor = nCol;
                 document.getElementById('flip-front').style.boxShadow = `0 0 15px ${nCol}80`;
                 document.getElementById('flip-back').style.borderColor = nCol;
                 document.getElementById('flip-back').style.boxShadow = `0 0 15px ${nCol}80`;
                 cCont.style.display = "block";
-            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO NO DISPONIBLE O INVÁLIDO</p>`; }
+            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO</p>`; }
         }
 
         function abrirDemo(n) { document.getElementById('modalDemo').style.display = "block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito una *DEMO GRATIS* de *'+n+'*. Entiendo que dura 1 hora.')}`); }
@@ -251,20 +243,26 @@
                     if(x.tipo === "full") hasYT = true;
                     if(x.tipo === "mail") hasMail = true;
                 });
-                if(hasYT) f.innerHTML += `<label>Mail / Clave YouTube:</label><input id="f-yt" placeholder="usuario@gmail.com / clave123">`;
+                if(hasYT) f.innerHTML += `<div class="alerta-roja" style="margin-bottom:10px;">Solo cuentas que no hayan tenido premium antes.</div><label>Mail YouTube:</label><input id="f-yt-user" placeholder="ejemplo@gmail.com"><label>Contraseña YouTube:</label><input id="f-yt-pass" placeholder="Clave123">`;
                 if(hasMail) f.innerHTML += `<label>Mail para Invitación:</label><input id="f-mail" placeholder="tu-correo@gmail.com">`;
                 document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
             }
             m.style.display = "block";
         }
 
-        function enviarPedido() {
+        function validarYEnviarPedido() {
+            const ytU = document.getElementById('f-yt-user')?.value.trim();
+            const ytP = document.getElementById('f-yt-pass')?.value.trim();
+            const mail = document.getElementById('f-mail')?.value.trim();
+            
+            if(document.getElementById('f-yt-user') && (!ytU || !ytP)) { alert("⚠️ Completa el Correo y Clave de YouTube."); return; }
+            if(document.getElementById('f-mail') && !mail) { alert("⚠️ Completa el Mail para la invitación."); return; }
+            
             let it = ""; let t = 0;
             carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; });
-            const yt = document.getElementById('f-yt')?.value || '';
-            const mail = document.getElementById('f-mail')?.value || '';
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n`;
-            if(yt || mail) { msg += `\n📩 DATOS ACTIVACIÓN:`; if(yt) msg += `\n• YouTube: ${yt}`; if(mail) msg += `\n• Mail: ${mail}`; }
+            const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`;
+            if(ytU || mail) { msg += `\n📩 DATOS ACTIVACIÓN:`; if(ytU) msg += `\n• YT: ${ytU} / Clave: ${ytP}`; if(mail) msg += `\n• Mail: ${mail}`; }
             msg += `\n\n📦 Envío comprobante.`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
