@@ -3,256 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALN FLUX STORE | Streaming Premium</title>
+    <title>ALN FLUX | Bóveda de Despacho</title>
     <style>
-        :root {
-            --morado: #6200ea; --cian: #00e5ff; --fondo: #050505;
-            --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800;
-            --neon-cyan: #00e5ff80;
-        }
-        body { margin: 0; padding: 0; background-color: var(--fondo); background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px); background-size: 550px 550px, 350px 350px; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
+        :root { --fondo: #0a0a0a; --tarjeta: #1a1a1a; --cian: #00e5ff; --verde: #25d366; }
+        body { background: var(--fondo); color: white; font-family: sans-serif; padding: 15px; margin: 0; }
+        .header { text-align: center; padding: 10px; border-bottom: 2px solid var(--cian); margin-bottom: 20px; }
+        #buscador { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #000; color: white; box-sizing: border-box; font-size: 1.1rem; margin-bottom: 20px; outline: none; }
+        #buscador:focus { border-color: var(--cian); }
         
-        .status-top { width: 100%; padding: 10px 0; text-align: center; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid; }
-        .tienda-abierta { background: rgba(37, 211, 102, 0.1); color: var(--verde); border-color: var(--verde); }
-        .tienda-cerrada { background: rgba(255, 68, 68, 0.1); color: var(--rojo); border-color: var(--rojo); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+        .card { background: var(--tarjeta); border-radius: 12px; padding: 15px; border-left: 5px solid #555; position: relative; }
         
-        header { width: 100%; background: linear-gradient(180deg, #100020 0%, var(--fondo) 100%); padding: 40px 0; text-align: center; border-bottom: 1px solid var(--morado); }
-        header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 5px; text-transform: uppercase; color: white; }
-        header h1 span { color: var(--cian); text-shadow: 0 0 15px var(--cian); }
-        
-        .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
-        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; position: relative; min-height: 180px; display: flex; flex-direction: column; justify-content: center; }
-        .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.1); }
-        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; display: block; color: white; }
-        
-        .btn-info { background: transparent; color: var(--cian); border: none; font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-bottom: 15px; display: block; width: 100%; }
-        .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; margin-bottom: 8px; }
-        .btn-demo { background: transparent; color: var(--cian); border: 1px solid var(--cian); padding: 8px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.7rem; text-transform: uppercase; }
+        /* Colores por servicio */
+        .disney { border-left-color: #0063e5; }
+        .hbo { border-left-color: #9900ff; }
+        .amazon { border-left-color: #ff9900; }
+        .ps { border-left-color: #003791; }
 
-        .boveda-section { width: 95%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px 20px; margin: 40px auto 120px; text-align: center; }
-        .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; margin: 15px 0; outline: none; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 5px; }
+        .info-row span { font-size: 0.9rem; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
         
-        .access-card-container { width: 100%; height: 440px; perspective: 1000px; margin-top: 20px; display: none; }
-        .access-card-inner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; }
-        .is-flipped { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
-        .card-face-front { background: var(--tarjeta); border: 2px solid var(--cian); justify-content: center; align-items: center; padding: 20px; }
-        .card-face-back { background: var(--tarjeta); border: 2px solid var(--cian); transform: rotateY(180deg); justify-content: space-between; padding: 20px; }
-        .rules-section { border-top: 1px dashed var(--cian); padding-top: 10px; margin-top: 10px; text-align: left; font-size: 0.6rem; color: #aaa; white-space: pre-line; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; }
-
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
-        .modal-content { background: #0a0a0a; margin: 8% auto; padding: 25px; border: 1px solid var(--morado); width: 90%; max-width: 450px; border-radius: 25px; }
-        .cart-float { position: fixed; bottom: 25px; right: 25px; background: var(--morado); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; z-index: 1000; font-weight: bold; border: 2px solid var(--cian); }
-        .btn-soporte { position: fixed; bottom: 25px; left: 25px; background: var(--naranja); color: white; padding: 15px 20px; border-radius: 50px; font-weight: bold; z-index: 1000; font-size: 0.8rem; border: 1px solid white; cursor: pointer; }
+        .btn-copy { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; text-transform: uppercase; }
+        .btn-copy:active { background: var(--cian); }
         
-        .form-datos { text-align: left; background: #000; padding: 15px; border-radius: 12px; border: 1px solid var(--cian); margin-top: 15px; }
-        label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
-        .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; border:none; cursor:pointer; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.9rem; }
-        .cart-item button { background: var(--rojo); border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .btn-full { width: 100%; background: var(--verde); color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; font-size: 0.9rem; }
+        .tag-perfil { font-size: 0.7rem; background: var(--cian); color: black; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <script>
-        // PANEL DE CONTROL
-        const TIENDA_ABIERTA = true; 
-        const DEMOS_HABILITADAS = true; 
-        const WHATSAPP_NRO = "5493782518960";
-        const ALIAS_PAGO = "Alanpe29";
-        const NOMBRE_PAGO = "Alan Nicolas Perez";
+<div class="header">
+    <h2 style="margin:0; letter-spacing: 2px;">ALN FLUX <span style="color:var(--cian)">BOVEDA</span></h2>
+</div>
 
-        const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Acceso premium combinado para disfrutar lo mejor del streaming y diseño profesional." },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Contenido original de Amazon (The Boys, Rings of Power), películas de estreno, series exclusivas y clásicos del cine." },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic. Películas de superhéroes y clásicos animados." },
-            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Calidad cinematográfica: Producciones de Warner Bros, DC Universe, Cartoon Network y las mejores series originales de HBO." },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Lo mejor de Nickelodeon, MTV, Showtime, Comedy Central y estrenos exclusivos de Paramount Pictures." },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Todo el contenido latino, novelas y fútbol mexicano en un solo lugar." },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", desc: "La mayor biblioteca de Anime del mundo. Estrenos directos de Japón, simulcasts y series clásicas." },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo", desc: "Música para expertos: Sonido en calidad Hi-Fi / Master y videos musicales en HD." },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "Televisión de alta calidad: Cientos de canales en vivo, Pack Fútbol completo, noticias, cine y series." },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "YouTube sin anuncios, reproducción en segundo plano y acceso completo a YouTube Music Premium." },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "YouTube Premium para hasta 5 miembros de la familia con cuentas separadas." },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional: Fotos premium, plantillas exclusivas y herramientas mágicas de edición." },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Canva Pro por 3 meses con todas las funciones premium activas." },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack ideal para revendedores: 10 cuentas de Canva Pro a precio preferencial." },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "TV Premium en vivo: Todos los canales en alta calidad, Pack Fútbol, noticias y cine." },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true, desc: "IPTV Premium: Estabilidad garantizada para ver el Pack Fútbol sin cortes y miles de canales mundiales." }
-        ];
+<input type="text" id="buscador" placeholder="🔍 Buscar cuenta o juego..." onkeyup="filtrar()">
 
-        const BOVEDA_CUENTAS = {
-            // AMAZON PRIME VIDEO
-            "ALN-AP722": { plataforma: "Amazon Prime", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP301": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP452": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP119": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP884": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            "ALN-AP625": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
-            // HBO MAX
-            "ALN-HB947": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB102": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB553": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB291": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB774": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            "ALN-HB308": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
-            // DISNEY PLUS
-            "ALN-DP991": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "1", pin: "2002", color: "#00e5ff", emoji: "🔵" },
-            "ALN-DP402": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "2", pin: "9910", color: "#00e5ff", emoji: "🔵" },
-            "ALN-DP115": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "3", pin: "4020", color: "#00e5ff", emoji: "🔵" },
-            "ALN-DP837": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "4", pin: "1150", color: "#00e5ff", emoji: "🔵" },
-            "ALN-DP662": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "5", pin: "0200", color: "#00e5ff", emoji: "🔵" }
-        };
+<div class="grid" id="contenedor">
+    </div>
 
-        const REGLAS_TEXTO = "⚠ Reglas de uso:\n1. Usar únicamente tu perfil asignado.\n2. No crear ni eliminar perfiles.\n3. Solo ingresar con 1 dispositivo.\n4. No modificar ninguna información de la cuenta.\n5. No agregar numero de celular/ni cambiar.\n\n☠️ En caso de no cumplir las reglas se le dará de baja el servicio y no habrá devolución.";
-    </script>
+<script>
+    const CUENTAS = [
+        { plataforma: "Disney Plus", clase: "disney", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "Perfil 1", pin: "2002", reglas: "No cambiar datos. 1 solo dispositivo." },
+        { plataforma: "HBO Max", clase: "hbo", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "Perfil 4", pin: "1141", reglas: "Respetar perfil asignado." },
+        { plataforma: "Amazon Prime", clase: "amazon", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "Perfil 02", pin: "00030", reglas: "Uso personal, no compartir." },
+        { plataforma: "Resident Evil 2 PS4", clase: "ps", mail: "re2ps4_aln@play.com", pass: "Resident88", perfil: "Primaria", pin: "N/A", reglas: "Instalar y loguear como indica el tutorial." },
+        // Agregá más acá siguiendo el formato
+    ];
 
-    <div id="status-top" class="status-top"></div>
-    <header><h1>ALN <span>FLUX</span> STORE</h1></header>
-    <div class="catalogo-container" id="main-grid"></div>
-
-    <div id="modalInfo" class="modal"><div class="modal-content"><h3 id="info-titulo" style="color:var(--cian); text-align:center;"></h3><p id="info-cuerpo" style="text-align:center;"></p><button onclick="cerrarTodo()" class="btn-finalizar" style="background:var(--cian); color:#000;">ENTENDIDO</button></div></div>
-    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem; text-align:center;">⏱️ DURACIÓN: 1 Hora.<br>🚫 No demos en eventos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR POR WHATSAPP</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
-
-    <section class="boveda-section">
-        <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
-        <input type="text" id="input-codigo" class="boveda-input" placeholder="INGRESA CÓDIGO">
-        <button onclick="canjearCodigo()" class="btn-add" style="margin-bottom:0;">REVELAR ACCESO</button>
-        <div id="access-card-container" class="access-card-container">
-            <div id="access-card-inner" class="access-card-inner">
-                <div id="flip-front" class="card-face card-face-front"><div id="flip-logo" style="font-size:3rem;"></div><div id="flip-vence" style="font-size:0.8rem; color:#aaa; margin-top:10px;"></div><button class="btn-add" style="font-size:0.7rem;" onclick="document.getElementById('access-card-inner').classList.add('is-flipped')">Ver Datos 🔄</button></div>
-                <div id="flip-back" class="card-face card-face-back">
-                    <div style="text-align:left; font-size:0.85rem; line-height:1.5;">
-                        <span style="color:var(--cian)">📺</span> <span id="txt-plat"></span><br>
-                        <span style="color:var(--cian)">📧 Correo:</span> <span id="txt-mail"></span><br>
-                        <span style="color:var(--cian)">🔑 Clave:</span> <span id="txt-pass"></span><br>
-                        <span style="color:var(--cian)">👤 Perfil:</span> <span id="txt-perfil"></span><br>
-                        <span style="color:var(--cian)">📌 PIN:</span> <span id="txt-pin"></span>
+    function cargarCuentas() {
+        const cont = document.getElementById('contenedor');
+        cont.innerHTML = "";
+        CUENTAS.forEach((c, index) => {
+            cont.innerHTML += `
+                <div class="card ${c.clase}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <strong style="color:var(--cian)">${c.plataforma}</strong>
+                        <span class="tag-perfil">${c.perfil}</span>
                     </div>
-                    <div id="txt-reglas-boveda" class="rules-section"></div>
-                    <button id="btn-copy-card" class="btn-add" style="font-size:0.7rem; margin-top:10px;">COPIAR DATOS ✅</button>
+                    <div class="info-row">
+                        <span>${c.mail}</span>
+                        <button class="btn-copy" onclick="copy('${c.mail}')">Mail</button>
+                    </div>
+                    <div class="info-row">
+                        <span>${c.pass}</span>
+                        <button class="btn-copy" onclick="copy('${c.pass}')">Pass</button>
+                    </div>
+                    <button class="btn-full" onclick="copyFull(${index})">COPIAR MENSAJE COMPLETO ✅</button>
                 </div>
-            </div>
-        </div>
-        <div id="resultado-canje"></div>
-    </section>
+            `;
+        });
+    }
 
-    <div class="cart-float" onclick="abrirCarrito()">🛒 <span id="cart-count">0</span> PRODUCTOS</div>
-    <div class="btn-soporte" onclick="abrirSoporte()">🔧 SOPORTE TÉCNICO</div>
+    function copy(texto) {
+        navigator.clipboard.writeText(texto);
+        // Feedback visual rápido
+    }
 
-    <div id="modalCarrito" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--cian); text-align:center;">MI PEDIDO</h3>
-            <div id="lista-carrito"></div>
-            <div id="seccion-pago" style="display:none;">
-                <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
-                <div id="form-datos" class="form-datos"></div>
-                <button class="btn-finalizar" onclick="validarYEnviarPedido()">ENVIAR PEDIDO POR WHATSAPP</button>
-            </div>
-            <p id="carrito-vacio" style="text-align:center; color:#555;">El carrito está vacío</p>
-            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
-        </div>
-    </div>
+    function copyFull(index) {
+        const c = CUENTAS[index];
+        const textoFull = `🍿 *TU CUENTA ALN FLUX*\n\n📺 *Servicio:* ${c.plataforma}\n📧 *Mail:* ${c.mail}\n🔑 *Pass:* ${c.pass}\n👤 *Perfil:* ${c.perfil}\n🔢 *PIN:* ${c.pin}\n\n⚠️ *Reglas:* ${c.reglas}\n\n¡Gracias por tu compra!`;
+        navigator.clipboard.writeText(textoFull);
+        alert("¡Mensaje completo copiado!");
+    }
 
-    <div id="modalSoporte" class="modal">
-        <div class="modal-content" style="border-color: var(--naranja);">
-            <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
-            <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
-                <label>Correo de la cuenta:</label><input type="text" id="sop-user">
-                <label>Clave:</label><input type="text" id="sop-pass">
-                <label>¿Qué problema tenés?:</label><textarea id="sop-prob" style="height:60px;"></textarea>
-            </div>
-            <button onclick="enviarSoporte()" class="btn-finalizar" style="background:var(--naranja)">ENVIAR TICKET</button>
-            <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:15px;">VOLVER</p>
-        </div>
-    </div>
-
-    <script>
-        let carrito = [];
-        const statusDiv = document.getElementById('status-top');
-        if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 DISPONIBLE"; }
-        else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 CERRADO"; }
-
-        function render() {
-            const grid = document.getElementById('main-grid'); grid.innerHTML = "";
-            PRODUCTOS.forEach(p => {
-                let h = `<div class="card"><h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-info" onclick="abrirInfo(${p.id})">[ Saber más ]</button><button class="btn-add" ${!TIENDA_ABIERTA?'disabled':''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA?'Añadir':'Cerrado'}</button>`;
-                if(p.demo) h += `<button class="btn-demo" ${!DEMOS_HABILITADAS?'disabled':''} onclick="abrirDemo('${p.nombre}')">${DEMOS_HABILITADAS?'🎁 Probar Demo':'Demos Pausadas'}</button>`;
-                h += `</div>`; grid.innerHTML += h;
-            });
+    function filtrar() {
+        let filtro = document.getElementById('buscador').value.toLowerCase();
+        let cards = document.getElementsByClassName('card');
+        for (let i = 0; i < cards.length; i++) {
+            let txt = cards[i].innerText.toLowerCase();
+            cards[i].style.display = txt.includes(filtro) ? "" : "none";
         }
+    }
 
-        function abrirInfo(id) { const p = PRODUCTOS.find(x => x.id === id); document.getElementById('info-titulo').innerText = p.nombre; document.getElementById('info-cuerpo').innerText = p.desc; document.getElementById('modalInfo').style.display = "block"; }
+    cargarCuentas();
+</script>
 
-        function canjearCodigo() {
-            const cod = document.getElementById('input-codigo').value.trim().toUpperCase();
-            const res = document.getElementById('resultado-canje');
-            const cCont = document.getElementById('access-card-container');
-            const cInner = document.getElementById('access-card-inner');
-            cCont.style.display = "none"; cInner.classList.remove('is-flipped'); res.innerHTML = "";
-            if(!cod) return;
-            const c = BOVEDA_CUENTAS[cod];
-            if(c && c.mail !== "") {
-                const v = new Date(); v.setDate(v.getDate() + 30);
-                document.getElementById('txt-plat').innerText = c.plataforma;
-                document.getElementById('txt-mail').innerText = c.mail;
-                document.getElementById('txt-pass').innerText = c.pass;
-                document.getElementById('txt-perfil').innerText = c.perfil;
-                document.getElementById('txt-pin').innerText = c.pin;
-                document.getElementById('flip-logo').innerText = c.emoji;
-                document.getElementById('flip-vence').innerText = `Vence: ${v.toLocaleDateString()}`;
-                document.getElementById('txt-reglas-boveda').innerText = "⚠ REGLAS DE USO:\n" + REGLAS_TEXTO.replace("⚠ Reglas de uso:\n", "").split('\n\n')[0];
-                document.getElementById('btn-copy-card').onclick = () => {
-                    const txt = `🍿 ENTREGA ALN FLUX\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n\n${REGLAS_TEXTO}`;
-                    navigator.clipboard.writeText(txt); alert('¡Copiado!');
-                };
-                cCont.style.display = "block";
-            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO O VACÍO</p>`; }
-        }
-
-        function abrirCarrito() {
-            if(!TIENDA_ABIERTA) return;
-            const l = document.getElementById('lista-carrito'); const p = document.getElementById('seccion-pago'); const f = document.getElementById('form-datos');
-            l.innerHTML = ""; f.innerHTML = "";
-            if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; p.style.display="none"; }
-            else {
-                document.getElementById('carrito-vacio').style.display="none"; p.style.display="block";
-                let t = 0; let hYT = false; let hM = false;
-                carrito.forEach((x, i) => { t += x.precio; l.innerHTML += `<div class="cart-item"><span>${x.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(x.tipo === "full") hYT = true; if(x.tipo === "mail") hM = true; });
-                document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
-                if(hYT) f.innerHTML += `<label>Mail YouTube:</label><input id="f-yt-u"><label>Clave YouTube:</label><input id="f-yt-p">`;
-                if(hM) f.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`;
-            }
-            document.getElementById('modalCarrito').style.display = "block";
-        }
-
-        function validarYEnviarPedido() {
-            const ytU = document.getElementById('f-yt-u')?.value.trim(); const ytP = document.getElementById('f-yt-p')?.value.trim(); const mail = document.getElementById('f-mail')?.value.trim();
-            if(document.getElementById('f-yt-u') && (!ytU || !ytP)) { alert("Completa Mail y Clave de YouTube."); return; }
-            if(document.getElementById('f-mail') && !mail) { alert("Completa Mail para invitación."); return; }
-            let it = ""; let t = 0; carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; });
-            const msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n${ytU?'📩 YT: '+ytU+' / '+ytP+'\n':''}${mail?'📩 Mail: '+mail+'\n':''}📦 Envío comprobante.`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
-        }
-
-        function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
-
-        function enviarSoporte() {
-            const p = document.getElementById('sop-plat').value.trim();
-            const u = document.getElementById('sop-user').value.trim();
-            const s = document.getElementById('sop-pass').value.trim();
-            const pr = document.getElementById('sop-prob').value.trim();
-            if(!p || !u || !s || !pr) { alert("⚠️ Completa todos los campos."); return; }
-            const msg = `🚨 SOPORTE\nPlat: ${p}\nUser: ${u}\nClave: ${s}\nProb: ${pr}`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
-        }
-
-        function abrirDemo(n) { document.getElementById('modalDemo').style.display="block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito DEMO de '+n)}`); }
-        function agregarAlCarrito(id) { if(!TIENDA_ABIERTA) return; carrito.push(PRODUCTOS.find(x => x.id === id)); document.getElementById('cart-count').innerText = carrito.length; }
-        function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-        render();
-    </script>
 </body>
 </html>
