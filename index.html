@@ -29,7 +29,6 @@
         .btn-info { background: transparent; color: var(--cian); border: none; font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-bottom: 15px; display: block; width: 100%; }
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; margin-bottom: 8px; }
         .btn-demo { background: transparent; color: var(--cian); border: 1px solid var(--cian); padding: 8px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.7rem; text-transform: uppercase; }
-        .btn-demo:disabled { border-color: #333; color: #555; cursor: not-allowed; }
 
         .boveda-section { width: 95%; max-width: 450px; background: #0a0a0a; border: 2px dashed var(--morado); border-radius: 25px; padding: 30px 20px; margin: 40px auto 120px; text-align: center; }
         .boveda-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #333; background: #000; color: white; text-align: center; font-weight: bold; font-size: 1.2rem; margin: 15px 0; outline: none; }
@@ -62,24 +61,25 @@
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
         const NOMBRE_PAGO = "Alan Nicolas Perez";
+        const CODIGO_AUTO_ENTREGA = "ALN-VERIFICADO-2026"; 
 
         const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Acceso premium combinado para disfrutar lo mejor del streaming y diseño profesional." },
-            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Contenido original de Amazon, películas de estreno y series exclusivas." },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic." },
-            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Warner Bros, DC Universe, Cartoon Network y series originales de HBO." },
-            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Lo mejor de Nickelodeon, MTV, Showtime y Comedy Central." },
-            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Todo el contenido latino, novelas y fútbol mexicano." },
-            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", desc: "La mayor biblioteca de Anime del mundo. Estrenos de Japón." },
-            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo", desc: "Música para expertos: Sonido en calidad Master y videos en HD." },
-            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "Cientos de canales en vivo, Pack Fútbol completo, noticias y cine." },
-            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "Sin anuncios, reproducción en segundo plano y YouTube Music Premium." },
-            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "Beneficio Premium para hasta 5 miembros de la familia." },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional: Fotos premium y herramientas mágicas." },
-            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Diseño profesional por 3 meses con funciones premium." },
-            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack ideal para revendedores: 10 cuentas de Canva Pro." },
-            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "Canales en alta calidad, Pack Fútbol, noticias y cine actualizado." },
-            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true, desc: "IPTV Premium: Estabilidad para ver el Pack Fútbol sin cortes." }
+            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Contenido premium Disney, Canva y Amazon Prime." },
+            { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Películas, series exclusivas y clásicos del cine." },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "Marvel, Star Wars, Pixar y National Geographic." },
+            { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Warner Bros, DC y series originales de HBO." },
+            { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Nickelodeon, MTV y estrenos de Paramount Pictures." },
+            { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Novelas y fútbol latino en un solo lugar." },
+            { id: 7,  nombre: "Crunchyroll", precio: 2500, tipo: "directo", desc: "El mejor anime sin anuncios directamente de Japón." },
+            { id: 8,  nombre: "Tidal Individual", precio: 1500, tipo: "directo", desc: "Música en alta fidelidad y videos musicales HD." },
+            { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "TV en vivo, Pack Fútbol completo y estrenos." },
+            { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "Sin anuncios, reproducción en segundo plano y Music Premium." },
+            { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "YouTube Premium para 5 cuentas familiares." },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional con todas las herramientas premium." },
+            { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Canva Pro por 3 meses para tus diseños." },
+            { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack para revendedores con 10 cuentas." },
+            { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "Canales en HD, Pack Fútbol y noticias en vivo." },
+            { id: 16, nombre: "POWER SIGNAL", precio: 2500, tipo: "directo", demo: true, desc: "IPTV premium para ver fútbol sin cortes." }
         ];
 
         const BOVEDA_CUENTAS = {
@@ -110,7 +110,7 @@
     <div class="catalogo-container" id="main-grid"></div>
 
     <div id="modalInfo" class="modal"><div class="modal-content"><h3 id="info-titulo" style="color:var(--cian); text-align:center;"></h3><p id="info-cuerpo" style="text-align:center;"></p><button onclick="cerrarTodo()" class="btn-finalizar" style="background:var(--cian); color:#000;">ENTENDIDO</button></div></div>
-    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem;">⏱️ <b>DURACIÓN:</b> 1 Hora.<br>🚫 <b>AVISO:</b> Prohibido pedir demos en horarios de partidos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR DEMO</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
+    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem;">⏱️ <b>DURACIÓN:</b> 1 Hora.<br>🚫 <b>AVISO:</b> No demos en partidos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR DEMO</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
 
     <section class="boveda-section">
         <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
@@ -144,14 +144,14 @@
             <div id="lista-carrito"></div>
             <div id="seccion-pago" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
-                <div style="background:#000; padding:15px; border-radius:15px; text-align:center; border:1px dashed var(--cian); margin-bottom:15px;">
-                    <span style="font-size:0.75rem; color:var(--cian);">MERCADO PAGO</span><br>
-                    <b style="font-size:1.3rem;" id="alias-txt"></b><br>
-                    <button onclick="navigator.clipboard.writeText(ALIAS_PAGO); alert('Copiado');" style="background:transparent; color:var(--cian); border:1px solid var(--cian); padding:3px; font-size:0.6rem; cursor:pointer;">COPIAR ALIAS</button>
-                    <div style="margin-top:8px; border-top:1px solid #222; padding-top:8px;"><b style="font-size:0.9rem;" id="nombre-txt"></b></div>
-                </div>
                 <div id="form-datos" class="form-datos"></div>
-                <button onclick="validarYEnviarPedido()" class="btn-finalizar">PEDIR POR WHATSAPP</button>
+                <div id="botones-pago-final"></div>
+                <div id="bloque-autoentrega" style="display:none; background:#111; padding:15px; border-radius:15px; border:1px solid var(--verde); margin-top:15px;">
+                    <p style="color:var(--verde); font-weight:bold; font-size:0.8rem; text-align:center;">¿YA PAGASTE POR MERCADO PAGO?</p>
+                    <label>NOMBRE COMPLETO DEL TITULAR QUE TRANSFIRIÓ:</label>
+                    <input id="nombre-titular" placeholder="Ej: Juan Carlos Sosa">
+                    <button onclick="liberarAuto()" style="background:var(--verde); color:white; border:none; width:100%; padding:15px; border-radius:10px; font-weight:bold; margin-top:10px; cursor:pointer;">REVELAR MI CUENTA 🔑</button>
+                </div>
             </div>
             <p id="carrito-vacio" style="text-align:center; color:#555;">Carrito vacío</p>
             <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
@@ -161,9 +161,8 @@
     <div id="modalSoporte" class="modal">
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
-            <div class="alerta-roja">🚩 REQUISITO: Enviar FOTO o VIDEO del error.</div>
             <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat">
+                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
                 <label>Correo:</label><input type="text" id="sop-user">
                 <label>Clave:</label><input type="text" id="sop-pass">
                 <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
@@ -176,14 +175,11 @@
     <script>
         let carrito = [];
         const statusDiv = document.getElementById('status-top');
-        document.getElementById('alias-txt').innerText = ALIAS_PAGO;
-        document.getElementById('nombre-txt').innerText = NOMBRE_PAGO;
         if(TIENDA_ABIERTA) { statusDiv.className = "status-top tienda-abierta"; statusDiv.innerText = "🟢 DISPONIBLE"; }
         else { statusDiv.className = "status-top tienda-cerrada"; statusDiv.innerText = "🔴 CERRADO"; }
 
         function render() {
-            const grid = document.getElementById('main-grid');
-            grid.innerHTML = "";
+            const grid = document.getElementById('main-grid'); grid.innerHTML = "";
             PRODUCTOS.forEach(p => {
                 let h = `<div class="card"><h2>${p.nombre}</h2><span class="precio-tag">$${p.precio.toLocaleString()}</span><button class="btn-info" onclick="abrirInfo(${p.id})">[ Saber más ]</button><button class="btn-add" ${!TIENDA_ABIERTA?'disabled':''} onclick="agregarAlCarrito(${p.id})">${TIENDA_ABIERTA?'Añadir':'Cerrado'}</button>`;
                 if(p.demo) h += `<button class="btn-demo" ${!DEMOS_HABILITADAS?'disabled':''} onclick="abrirDemo('${p.nombre}')">${DEMOS_HABILITADAS?'🎁 Probar Demo':'Demos Pausadas'}</button>`;
@@ -215,68 +211,64 @@
                 const textoCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS_TEXTO}`;
                 document.getElementById('btn-copy-card').onclick = () => { navigator.clipboard.writeText(textoCopia); alert('Copiado'); };
                 const nCol = c.color || "#00e5ff";
-                document.getElementById('flip-front').style.borderColor = nCol;
-                document.getElementById('flip-front').style.boxShadow = `0 0 15px ${nCol}80`;
-                document.getElementById('flip-back').style.borderColor = nCol;
-                document.getElementById('flip-back').style.boxShadow = `0 0 15px ${nCol}80`;
+                document.getElementById('flip-front').style.borderColor = nCol; document.getElementById('flip-front').style.boxShadow = `0 0 15px ${nCol}80`;
+                document.getElementById('flip-back').style.borderColor = nCol; document.getElementById('flip-back').style.boxShadow = `0 0 15px ${nCol}80`;
                 cCont.style.display = "block";
             } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO</p>`; }
         }
 
-        function abrirDemo(n) { document.getElementById('modalDemo').style.display = "block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito una *DEMO GRATIS* de *'+n+'*. Entiendo que dura 1 hora.')}`); }
-        function agregarAlCarrito(id) { if(!TIENDA_ABIERTA) return; carrito.push(PRODUCTOS.find(x => x.id === id)); document.getElementById('cart-count').innerText = carrito.length; }
-
         function abrirCarrito() {
             if(!TIENDA_ABIERTA) return;
-            const m = document.getElementById('modalCarrito');
-            const l = document.getElementById('lista-carrito');
-            const p = document.getElementById('seccion-pago');
-            const f = document.getElementById('form-datos');
-            l.innerHTML = ""; f.innerHTML = ""; let t = 0;
+            const l = document.getElementById('lista-carrito'); const p = document.getElementById('seccion-pago'); const f = document.getElementById('form-datos'); const b = document.getElementById('botones-pago-final');
+            l.innerHTML = ""; f.innerHTML = ""; b.innerHTML = ""; document.getElementById('bloque-autoentrega').style.display="none";
             if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; p.style.display="none"; }
             else {
                 document.getElementById('carrito-vacio').style.display="none"; p.style.display="block";
-                let hasYT = false; let hasMail = false;
-                carrito.forEach((x, i) => {
-                    t += x.precio;
-                    l.innerHTML += `<div class="cart-item"><span>${x.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`;
-                    if(x.tipo === "full") hasYT = true;
-                    if(x.tipo === "mail") hasMail = true;
-                });
-                if(hasYT) f.innerHTML += `<div class="alerta-roja" style="margin-bottom:10px;">Solo cuentas que no hayan tenido premium antes.</div><label>Mail YouTube:</label><input id="f-yt-user" placeholder="ejemplo@gmail.com"><label>Contraseña YouTube:</label><input id="f-yt-pass" placeholder="Clave123">`;
-                if(hasMail) f.innerHTML += `<label>Mail para Invitación:</label><input id="f-mail" placeholder="tu-correo@gmail.com">`;
+                let t = 0; let hYT = false; let hM = false;
+                carrito.forEach((x, i) => { t += x.precio; l.innerHTML += `<div class="cart-item"><span>${x.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(x.tipo === "full") hYT = true; if(x.tipo === "mail") hM = true; });
                 document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
+                if(hYT) f.innerHTML += `<div class="alerta-roja" style="margin-bottom:10px;">YouTube: Solo para cuentas nuevas.</div><label>Mail YouTube:</label><input id="f-yt-u"><label>Clave YouTube:</label><input id="f-yt-p">`;
+                if(hM) f.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`;
+                b.innerHTML = `<button class="btn-finalizar" onclick="pagoRapidoMP(${t})" style="background:#009ee3; margin-bottom:10px;">⚡ PAGAR CON MERCADO PAGO</button><button class="btn-finalizar" onclick="validarYEnviarPedido()">🏦 TRANSFERENCIA / OTROS</button>`;
             }
-            m.style.display = "block";
+            document.getElementById('modalCarrito').style.display = "block";
+        }
+
+        function pagoRapidoMP(monto) {
+            navigator.clipboard.writeText(ALIAS_PAGO);
+            alert("✅ ALIAS COPIADO: " + ALIAS_PAGO + "\n\n1. Entrá a Mercado Pago.\n2. Pagá $" + monto.toLocaleString() + ".\n3. Al terminar, volvé aquí para tu código.");
+            window.location.href = "mercadopago://";
+            document.getElementById('botones-pago-final').style.display = "none";
+            document.getElementById('bloque-autoentrega').style.display = "block";
+        }
+
+        function liberarAuto() {
+            const titular = document.getElementById('nombre-titular').value.trim();
+            if(!titular) { alert("⚠️ Por favor, poné tu nombre para continuar."); return; }
+            let it = ""; carrito.forEach(x => it += x.nombre + ", ");
+            const msg = `Ya realicé el pago de ${it.slice(0, -2)}: mandé la plata a la cuenta de mercado pago de parte de "${titular}"`;
+            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`, '_blank');
+            alert("🎉 PAGO EN REVISIÓN. Tu código de Bóveda es: " + CODIGO_AUTO_ENTREGA);
+            cerrarTodo(); document.getElementById('input-codigo').value = CODIGO_AUTO_ENTREGA;
         }
 
         function validarYEnviarPedido() {
-            const ytU = document.getElementById('f-yt-user')?.value.trim();
-            const ytP = document.getElementById('f-yt-pass')?.value.trim();
-            const mail = document.getElementById('f-mail')?.value.trim();
-            
-            if(document.getElementById('f-yt-user') && (!ytU || !ytP)) { alert("⚠️ Completa el Correo y Clave de YouTube."); return; }
-            if(document.getElementById('f-mail') && !mail) { alert("⚠️ Completa el Mail para la invitación."); return; }
-            
-            let it = ""; let t = 0;
-            carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; });
-            const fecha = new Date().toLocaleDateString() + " - " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            let msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n🕒 Fecha: ${fecha}\n`;
-            if(ytU || mail) { msg += `\n📩 DATOS ACTIVACIÓN:`; if(ytU) msg += `\n• YT: ${ytU} / Clave: ${ytP}`; if(mail) msg += `\n• Mail: ${mail}`; }
-            msg += `\n\n📦 Envío comprobante.`;
+            const ytU = document.getElementById('f-yt-u')?.value.trim(); const ytP = document.getElementById('f-yt-p')?.value.trim(); const mail = document.getElementById('f-mail')?.value.trim();
+            if(document.getElementById('f-yt-u') && (!ytU || !ytP)) { alert("⚠️ Completa Mail y Clave de YouTube."); return; }
+            if(document.getElementById('f-mail') && !mail) { alert("⚠️ Completa Mail para invitación."); return; }
+            let it = ""; let t = 0; carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; });
+            const msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n${ytU?'📩 YT: '+ytU+' / '+ytP+'\n':''}${mail?'📩 Mail: '+mail+'\n':''}📦 Envío comprobante.`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
-        function abrirSoporte() { document.getElementById('modalSoporte').style.display = "block"; }
         function enviarSoporte() {
-            const p = document.getElementById('sop-plat').value.trim();
-            const u = document.getElementById('sop-user').value.trim();
-            const s = document.getElementById('sop-pass').value.trim();
-            const pr = document.getElementById('sop-prob').value.trim();
+            const p = document.getElementById('sop-plat').value.trim(); const u = document.getElementById('sop-user').value.trim(); const s = document.getElementById('sop-pass').value.trim(); const pr = document.getElementById('sop-prob').value.trim();
             if(!p || !u || !s || !pr) { alert("⚠️ Completa todos los campos."); return; }
-            const msg = `🚨 *SOPORTE*\n• Plat: ${p}\n• User: ${u}\n• Pass: ${s}\n• Prob: ${pr}`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
+            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('🚨 *SOPORTE*\n• Plat: '+p+'\n• User: '+u+'\n• Prob: '+pr)}`);
         }
+
+        function abrirDemo(n) { document.getElementById('modalDemo').style.display="block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito DEMO de '+n)}`); }
+        function agregarAlCarrito(id) { if(!TIENDA_ABIERTA) return; carrito.push(PRODUCTOS.find(x => x.id === id)); document.getElementById('cart-count').innerText = carrito.length; }
         function cerrarTodo() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         render();
     </script>
