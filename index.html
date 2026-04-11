@@ -7,24 +7,23 @@
     <style>
         :root {
             --morado: #6200ea; --cian: #00e5ff; --fondo: #050505;
-            --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800; --oro: #ffd700;
-            --gris-oscuro: #333; --neon-cyan: #00e5ff80;
+            --tarjeta: #111111; --verde: #25d366; --rojo: #ff4444; --naranja: #ff9800;
+            --neon-cyan: #00e5ff80;
         }
-        body { margin: 0; padding: 0; background-color: var(--fondo); background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px), radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px); background-size: 550px 550px, 350px 350px, 250px 250px; background-position: 0 0, 40px 60px, 130px 270px; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
+        body { margin: 0; padding: 0; background-color: var(--fondo); background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px); background-size: 550px 550px, 350px 350px; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; }
         
         .status-top { width: 100%; padding: 10px 0; text-align: center; font-weight: bold; font-size: 0.85rem; border-bottom: 1px solid; }
         .tienda-abierta { background: rgba(37, 211, 102, 0.1); color: var(--verde); border-color: var(--verde); }
         .tienda-cerrada { background: rgba(255, 68, 68, 0.1); color: var(--rojo); border-color: var(--rojo); }
         
         header { width: 100%; background: linear-gradient(180deg, #100020 0%, var(--fondo) 100%); padding: 40px 0; text-align: center; border-bottom: 1px solid var(--morado); }
-        header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 5px; text-transform: uppercase; color: white; display: inline-block;}
-        header h1 span { color: var(--cian); animation: glitchNeon 8s infinite; }
-        @keyframes glitchNeon { 0%, 100% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); } 92% { text-shadow: 0 0 10px var(--cian), 0 0 20px var(--cian); opacity: 1; } 93% { text-shadow: 0 0 5px var(--morado), 0 0 10px var(--morado); opacity: 0.8; } 95% { text-shadow: none; opacity: 0.7; } }
+        header h1 { margin: 0; font-size: 2.3rem; letter-spacing: 5px; text-transform: uppercase; color: white; }
+        header h1 span { color: var(--cian); text-shadow: 0 0 15px var(--cian); }
         
         .catalogo-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; width: 95%; max-width: 1100px; padding: 30px 0 50px; }
-        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; display: flex; flex-direction: column; justify-content: center; min-height: 180px; position: relative; }
-        .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.15); }
-        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; display: block; }
+        .card { background: var(--tarjeta); border-radius: 18px; padding: 20px; text-align: center; border: 1px solid #222; transition: 0.3s ease; position: relative; min-height: 180px; display: flex; flex-direction: column; justify-content: center; }
+        .card:hover { border-color: var(--cian); transform: translateY(-3px); box-shadow: 0 5px 20px rgba(0, 229, 255, 0.1); }
+        .precio-tag { font-size: 1.8rem; font-weight: bold; margin-bottom: 10px; display: block; color: white; }
         
         .btn-info { background: transparent; color: var(--cian); border: none; font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-bottom: 15px; display: block; width: 100%; }
         .btn-add { background: var(--morado); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; text-transform: uppercase; margin-bottom: 8px; }
@@ -37,8 +36,8 @@
         .access-card-inner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; }
         .is-flipped { transform: rotateY(180deg); }
         .card-face { position: absolute; width: 100%; height: 100%; border-radius: 20px; backface-visibility: hidden; display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; }
-        .card-face-front { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); justify-content: center; align-items: center; padding: 20px; }
-        .card-face-back { background: var(--tarjeta); border: 2px solid #00e5ff; box-shadow: 0 0 20px var(--neon-cyan); transform: rotateY(180deg); justify-content: space-between; padding: 20px; }
+        .card-face-front { background: var(--tarjeta); border: 2px solid var(--cian); justify-content: center; align-items: center; padding: 20px; }
+        .card-face-back { background: var(--tarjeta); border: 2px solid var(--cian); transform: rotateY(180deg); justify-content: space-between; padding: 20px; }
         .rules-section { border-top: 1px dashed var(--cian); padding-top: 10px; margin-top: 10px; text-align: left; font-size: 0.6rem; color: #aaa; white-space: pre-line; background: rgba(255,255,255,0.02); padding: 8px; border-radius: 10px; }
 
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
@@ -50,6 +49,8 @@
         label { font-size: 0.7rem; color: var(--cian); display: block; margin-top: 10px; text-transform: uppercase; font-weight: bold; }
         input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
         .btn-finalizar { display: block; background: var(--verde); color: white; text-decoration: none; padding: 16px; border-radius: 15px; font-weight: bold; margin-top: 20px; text-align: center; width: 100%; border:none; cursor:pointer; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.9rem; }
+        .cart-item button { background: var(--rojo); border: none; color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -60,13 +61,11 @@
         const DEMOS_HABILITADAS = true; 
         const WHATSAPP_NRO = "5493782518960";
         const ALIAS_PAGO = "Alanpe29";
-        const NOMBRE_PAGO = "Alan Nicolas Perez";
-        const CODIGO_AUTO_ENTREGA = "ALN-VERIFICADO-2026"; 
 
         const PRODUCTOS = [
-            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Contenido premium Disney, Canva y Amazon Prime." },
+            { id: 1,  nombre: "Combo: Disney + Canva + Amazon", precio: 5000, tipo: "mail", desc: "Contenido variado premium Disney, Canva y Amazon Prime." },
             { id: 2,  nombre: "Amazon Prime Video", precio: 2500, tipo: "directo", desc: "Películas, series exclusivas y clásicos del cine." },
-            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "Marvel, Star Wars, Pixar y National Geographic." },
+            { id: 3,  nombre: "Disney Plus", precio: 2500, tipo: "directo", desc: "El hogar de Marvel, Star Wars, Pixar, Disney y National Geographic." },
             { id: 4,  nombre: "Max (HBO)", precio: 2000, tipo: "directo", desc: "Warner Bros, DC y series originales de HBO." },
             { id: 5,  nombre: "Paramount Plus", precio: 2000, tipo: "directo", desc: "Nickelodeon, MTV y estrenos de Paramount Pictures." },
             { id: 6,  nombre: "VIX Premium", precio: 2000, tipo: "directo", desc: "Novelas y fútbol latino en un solo lugar." },
@@ -75,7 +74,7 @@
             { id: 9,  nombre: "Flujo TV", precio: 5500, tipo: "directo", desc: "TV en vivo, Pack Fútbol completo y estrenos." },
             { id: 10, nombre: "YouTube Individual", precio: 2000, tipo: "full", desc: "Sin anuncios, reproducción en segundo plano y Music Premium." },
             { id: 11, nombre: "YouTube Familiar", precio: 3000, tipo: "full", desc: "YouTube Premium para 5 cuentas familiares." },
-            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional con todas las herramientas premium." },
+            { id: 12, nombre: "Canva Pro (1 mes)", precio: 1600, tipo: "mail", desc: "Diseño profesional con todas las funciones premium." },
             { id: 13, nombre: "Canva Pro (3 meses)", precio: 3000, tipo: "mail", desc: "Canva Pro por 3 meses para tus diseños." },
             { id: 14, nombre: "Canva Mayorista (10u)", precio: 9999, tipo: "directo", desc: "Pack para revendedores con 10 cuentas." },
             { id: 15, nombre: "TV Digital N", precio: 7999, tipo: "directo", demo: true, desc: "Canales en HD, Pack Fútbol y noticias en vivo." },
@@ -83,18 +82,23 @@
         ];
 
         const BOVEDA_CUENTAS = {
+            // AMAZON PRIME VIDEO
             "ALN-AP722": { plataforma: "Amazon Prime", mail: "lomajoya1@outlook.com", pass: "Juanmaria1@", perfil: "02", pin: "00030", color: "#ff9800", emoji: "🟠" },
             "ALN-AP301": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP452": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP119": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP884": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
             "ALN-AP625": { plataforma: "Amazon Prime", mail: "", pass: "", perfil: "", pin: "", color: "#ff9800", emoji: "🟠" },
+
+            // HBO MAX
             "ALN-HB947": { plataforma: "HBO Max", mail: "garabalsanti+max5@gmail.com", pass: "Freemium2031", perfil: "4", pin: "1141", color: "#6200ea", emoji: "🟣" },
             "ALN-HB102": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB553": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB291": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB774": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
             "ALN-HB308": { plataforma: "HBO Max", mail: "", pass: "", perfil: "", pin: "", color: "#6200ea", emoji: "🟣" },
+
+            // DISNEY PLUS
             "ALN-DP991": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "1", pin: "2002", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP402": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "2", pin: "9910", color: "#00e5ff", emoji: "🔵" },
             "ALN-DP115": { plataforma: "Disney Plus", mail: "sofia.mendez@semflix.net", pass: "ander5066", perfil: "3", pin: "4020", color: "#00e5ff", emoji: "🔵" },
@@ -110,7 +114,7 @@
     <div class="catalogo-container" id="main-grid"></div>
 
     <div id="modalInfo" class="modal"><div class="modal-content"><h3 id="info-titulo" style="color:var(--cian); text-align:center;"></h3><p id="info-cuerpo" style="text-align:center;"></p><button onclick="cerrarTodo()" class="btn-finalizar" style="background:var(--cian); color:#000;">ENTENDIDO</button></div></div>
-    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem;">⏱️ <b>DURACIÓN:</b> 1 Hora.<br>🚫 <b>AVISO:</b> No demos en partidos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR DEMO</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
+    <div id="modalDemo" class="modal"><div class="modal-content" style="border-color:var(--cian);"><h3 style="color:var(--cian); text-align:center;">🎁 DEMO GRATUITA</h3><p style="font-size:0.85rem; text-align:center;">⏱️ DURACIÓN: 1 Hora.<br>🚫 No demos en eventos importantes.</p><button id="btn-whatsapp-demo" class="btn-finalizar" style="background:var(--cian); color:#000;">SOLICITAR POR WHATSAPP</button><p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p></div></div>
 
     <section class="boveda-section">
         <h3 style="color: var(--morado); margin-top: 0;">🔒 BÓVEDA DE CLIENTES</h3>
@@ -118,7 +122,7 @@
         <button onclick="canjearCodigo()" class="btn-add" style="margin-bottom:0;">REVELAR ACCESO</button>
         <div id="access-card-container" class="access-card-container">
             <div id="access-card-inner" class="access-card-inner">
-                <div id="flip-front" class="card-face card-face-front"><div id="flip-logo" style="font-size:3rem;"></div><div id="flip-vence" style="font-size:0.8rem; color:#aaa; margin-top:10px;"></div><button class="flip-btn" onclick="document.getElementById('access-card-inner').classList.add('is-flipped')">Ver Datos 🔄</button></div>
+                <div id="flip-front" class="card-face card-face-front"><div id="flip-logo" style="font-size:3rem;"></div><div id="flip-vence" style="font-size:0.8rem; color:#aaa; margin-top:10px;"></div><button class="btn-info" onclick="document.getElementById('access-card-inner').classList.add('is-flipped')">Ver Datos 🔄</button></div>
                 <div id="flip-back" class="card-face card-face-back">
                     <div style="text-align:left; font-size:0.85rem; line-height:1.5;">
                         <span style="color:var(--cian)">📺</span> <span id="txt-plat"></span><br>
@@ -128,7 +132,7 @@
                         <span style="color:var(--cian)">📌 PIN:</span> <span id="txt-pin"></span>
                     </div>
                     <div id="txt-reglas-boveda" class="rules-section"></div>
-                    <button id="btn-copy-card" class="copy-btn">COPIAR TODO ✅</button>
+                    <button id="btn-copy-card" class="btn-add" style="font-size:0.7rem; margin-top:10px;">COPIAR DATOS ✅</button>
                 </div>
             </div>
         </div>
@@ -145,15 +149,9 @@
             <div id="seccion-pago" style="display:none;">
                 <div style="font-size: 1.5rem; text-align: center; margin: 15px 0;">TOTAL: <span id="total-precio" style="color:var(--cian);">$0</span></div>
                 <div id="form-datos" class="form-datos"></div>
-                <div id="botones-pago-final"></div>
-                <div id="bloque-autoentrega" style="display:none; background:#111; padding:15px; border-radius:15px; border:1px solid var(--verde); margin-top:15px;">
-                    <p style="color:var(--verde); font-weight:bold; font-size:0.8rem; text-align:center;">¿YA PAGASTE POR MERCADO PAGO?</p>
-                    <label>NOMBRE COMPLETO DEL TITULAR QUE TRANSFIRIÓ:</label>
-                    <input id="nombre-titular" placeholder="Ej: Juan Carlos Sosa">
-                    <button onclick="liberarAuto()" style="background:var(--verde); color:white; border:none; width:100%; padding:15px; border-radius:10px; font-weight:bold; margin-top:10px; cursor:pointer;">REVELAR MI CUENTA 🔑</button>
-                </div>
+                <button class="btn-finalizar" onclick="validarYEnviarPedido()">ENVIAR PEDIDO POR WHATSAPP</button>
             </div>
-            <p id="carrito-vacio" style="text-align:center; color:#555;">Carrito vacío</p>
+            <p id="carrito-vacio" style="text-align:center; color:#555;">El carrito está vacío</p>
             <p onclick="cerrarTodo()" style="text-align:center; color:var(--rojo); cursor:pointer; margin-top:20px;">CERRAR</p>
         </div>
     </div>
@@ -162,8 +160,8 @@
         <div class="modal-content" style="border-color: var(--naranja);">
             <h3 style="color:var(--naranja); text-align:center;">SOPORTE TÉCNICO</h3>
             <div class="form-datos" style="border-color:var(--naranja);">
-                <label>Plataforma:</label><input type="text" id="sop-plat" placeholder="Ej: Disney">
-                <label>Correo:</label><input type="text" id="sop-user">
+                <label>Plataforma:</label><input type="text" id="sop-plat">
+                <label>Correo de la cuenta:</label><input type="text" id="sop-user">
                 <label>Clave:</label><input type="text" id="sop-pass">
                 <label>Problema:</label><textarea id="sop-prob" style="height:60px;"></textarea>
             </div>
@@ -206,65 +204,44 @@
                 document.getElementById('txt-pin').innerText = c.pin;
                 document.getElementById('flip-logo').innerText = c.emoji;
                 document.getElementById('flip-vence').innerText = `Vence: ${v.toLocaleDateString()}`;
-                const reglasLimpias = REGLAS_TEXTO.split('\n\n')[0].replace("⚠ Reglas de uso:\n", "");
-                document.getElementById('txt-reglas-boveda').innerText = "⚠ REGLAS DE USO:\n" + reglasLimpias;
-                const textoCopia = `🍿 ENTREGA ALN FLUX\n------------------\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n📅 Vence: ${v.toLocaleDateString()}\n\n${REGLAS_TEXTO}`;
-                document.getElementById('btn-copy-card').onclick = () => { navigator.clipboard.writeText(textoCopia); alert('Copiado'); };
-                const nCol = c.color || "#00e5ff";
-                document.getElementById('flip-front').style.borderColor = nCol; document.getElementById('flip-front').style.boxShadow = `0 0 15px ${nCol}80`;
-                document.getElementById('flip-back').style.borderColor = nCol; document.getElementById('flip-back').style.boxShadow = `0 0 15px ${nCol}80`;
+                document.getElementById('txt-reglas-boveda').innerText = "⚠ REGLAS DE USO:\n" + REGLAS_TEXTO.replace("⚠ Reglas de uso:\n", "").split('\n\n')[0];
+                document.getElementById('btn-copy-card').onclick = () => {
+                    const txt = `🍿 ENTREGA ALN FLUX\n📺 Plat: ${c.plataforma}\n📧 Correo: ${c.mail}\n🔑 Clave: ${c.pass}\n👤 Perfil: ${c.perfil}\n📌 PIN: ${c.pin}\n\n${REGLAS_TEXTO}`;
+                    navigator.clipboard.writeText(txt); alert('¡Copiado!');
+                };
                 cCont.style.display = "block";
-            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO</p>`; }
+            } else { res.innerHTML = `<p style="color:var(--rojo); margin-top:10px;">❌ CÓDIGO INVÁLIDO O VACÍO</p>`; }
         }
 
         function abrirCarrito() {
             if(!TIENDA_ABIERTA) return;
-            const l = document.getElementById('lista-carrito'); const p = document.getElementById('seccion-pago'); const f = document.getElementById('form-datos'); const b = document.getElementById('botones-pago-final');
-            l.innerHTML = ""; f.innerHTML = ""; b.innerHTML = ""; document.getElementById('bloque-autoentrega').style.display="none";
+            const l = document.getElementById('lista-carrito'); const p = document.getElementById('seccion-pago'); const f = document.getElementById('form-datos');
+            l.innerHTML = ""; f.innerHTML = "";
             if(carrito.length === 0) { document.getElementById('carrito-vacio').style.display="block"; p.style.display="none"; }
             else {
                 document.getElementById('carrito-vacio').style.display="none"; p.style.display="block";
                 let t = 0; let hYT = false; let hM = false;
                 carrito.forEach((x, i) => { t += x.precio; l.innerHTML += `<div class="cart-item"><span>${x.nombre}</span><button onclick="carrito.splice(${i},1); abrirCarrito()">X</button></div>`; if(x.tipo === "full") hYT = true; if(x.tipo === "mail") hM = true; });
                 document.getElementById('total-precio').innerText = "$" + t.toLocaleString();
-                if(hYT) f.innerHTML += `<div class="alerta-roja" style="margin-bottom:10px;">YouTube: Solo para cuentas nuevas.</div><label>Mail YouTube:</label><input id="f-yt-u"><label>Clave YouTube:</label><input id="f-yt-p">`;
+                if(hYT) f.innerHTML += `<label>Mail YouTube:</label><input id="f-yt-u"><label>Clave YouTube:</label><input id="f-yt-p">`;
                 if(hM) f.innerHTML += `<label>Mail Invitación:</label><input id="f-mail">`;
-                b.innerHTML = `<button class="btn-finalizar" onclick="pagoRapidoMP(${t})" style="background:#009ee3; margin-bottom:10px;">⚡ PAGAR CON MERCADO PAGO</button><button class="btn-finalizar" onclick="validarYEnviarPedido()">🏦 TRANSFERENCIA / OTROS</button>`;
             }
             document.getElementById('modalCarrito').style.display = "block";
         }
 
-        function pagoRapidoMP(monto) {
-            navigator.clipboard.writeText(ALIAS_PAGO);
-            alert("✅ ALIAS COPIADO: " + ALIAS_PAGO + "\n\n1. Entrá a Mercado Pago.\n2. Pagá $" + monto.toLocaleString() + ".\n3. Al terminar, volvé aquí para tu código.");
-            window.location.href = "mercadopago://";
-            document.getElementById('botones-pago-final').style.display = "none";
-            document.getElementById('bloque-autoentrega').style.display = "block";
-        }
-
-        function liberarAuto() {
-            const titular = document.getElementById('nombre-titular').value.trim();
-            if(!titular) { alert("⚠️ Por favor, poné tu nombre para continuar."); return; }
-            let it = ""; carrito.forEach(x => it += x.nombre + ", ");
-            const msg = `Ya realicé el pago de ${it.slice(0, -2)}: mandé la plata a la cuenta de mercado pago de parte de "${titular}"`;
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`, '_blank');
-            alert("🎉 PAGO EN REVISIÓN. Tu código de Bóveda es: " + CODIGO_AUTO_ENTREGA);
-            cerrarTodo(); document.getElementById('input-codigo').value = CODIGO_AUTO_ENTREGA;
-        }
-
         function validarYEnviarPedido() {
             const ytU = document.getElementById('f-yt-u')?.value.trim(); const ytP = document.getElementById('f-yt-p')?.value.trim(); const mail = document.getElementById('f-mail')?.value.trim();
-            if(document.getElementById('f-yt-u') && (!ytU || !ytP)) { alert("⚠️ Completa Mail y Clave de YouTube."); return; }
-            if(document.getElementById('f-mail') && !mail) { alert("⚠️ Completa Mail para invitación."); return; }
+            if(document.getElementById('f-yt-u') && (!ytU || !ytP)) { alert("Completa Mail y Clave de YouTube."); return; }
+            if(document.getElementById('f-mail') && !mail) { alert("Completa Mail para invitación."); return; }
             let it = ""; let t = 0; carrito.forEach((x, i) => { it += `${i+1}) ${x.nombre}\n`; t += x.precio; });
-            const msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n👤 Titular: ${NOMBRE_PAGO}\n${ytU?'📩 YT: '+ytU+' / '+ytP+'\n':''}${mail?'📩 Mail: '+mail+'\n':''}📦 Envío comprobante.`;
+            const msg = `Hola ALN FLUX STORE 👋\nQuiero comprar:\n\n${it}\n💰 Total: $${t.toLocaleString()}\n🔑 Alias: ${ALIAS_PAGO}\n${ytU?'📩 YT: '+ytU+' / '+ytP+'\n':''}${mail?'📩 Mail: '+mail+'\n':''}📦 Envío comprobante.`;
             window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent(msg)}`);
         }
 
         function enviarSoporte() {
             const p = document.getElementById('sop-plat').value.trim(); const u = document.getElementById('sop-user').value.trim(); const s = document.getElementById('sop-pass').value.trim(); const pr = document.getElementById('sop-prob').value.trim();
-            if(!p || !u || !s || !pr) { alert("⚠️ Completa todos los campos."); return; }
-            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('🚨 *SOPORTE*\n• Plat: '+p+'\n• User: '+u+'\n• Prob: '+pr)}`);
+            if(!p || !u || !s || !pr) { alert("Completa todos los campos."); return; }
+            window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('🚨 SOPORTE\nPlat: '+p+'\nUser: '+u+'\nProb: '+pr)}`);
         }
 
         function abrirDemo(n) { document.getElementById('modalDemo').style.display="block"; document.getElementById('btn-whatsapp-demo').onclick = () => window.open(`https://wa.me/${WHATSAPP_NRO}?text=${encodeURIComponent('Hola ALN FLUX! 👋 Solicito DEMO de '+n)}`); }
